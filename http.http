@@ -1,0 +1,5 @@
+POST http://localhost:3010/graphql
+Content-Type: application/json
+Accept: application/json
+
+{ "query": "{ hello, square(x: 6), rand, getDie(numSides: 12){ rollOnce, roll(numRolls: 4) } }" }

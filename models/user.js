@@ -5,17 +5,22 @@ const userSchema = new Schema({
   username: {
     type: String,
     unique: true,
+    required: true
   },
   email: {
     type: String,
     unique: true,
+  },
+  password: {
+    type: String,
+    required: true
   },
   firstname: String,
   lastname: String,
   bio: String,
   avatar: String,
   ip: String,
-  lastseen: String,
+  lastSeen: String,
   following: String
 })
 
