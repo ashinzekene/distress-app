@@ -1,5 +1,6 @@
 const mongoose = require("mongoose")
 const Schema = mongoose.Schema
+const { categories } = require('../utils/constants')
 
 const distressSchema = new Schema({
   title: String,
@@ -14,6 +15,11 @@ const distressSchema = new Schema({
   }],
   location: String,
   ip: String,
+  tags: [String],
+  category: {
+    type: String,
+    enum: categories
+  },
   comments: [{
     type: Schema.Types.ObjectId,
     ref: 'Comment',

@@ -1,0 +1,9 @@
+{
+  "watch": [
+    "models/",
+    "controllers/",
+    "utils/",
+    "routes/"
+  ],
+  "exec": "node ./server.js" 
+}
