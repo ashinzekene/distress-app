@@ -1,5 +1,11 @@
-POST http://localhost:3010/graphql
+POST http://localhost:4321/users/new
 Content-Type: application/json
 Accept: application/json
 
-{ "query": "{ hello, square(x: 6), rand, getDie(numSides: 12){ rollOnce, roll(numRolls: 4) } }" }
+{
+  "username": "Ekonash",
+  "password": "isioma",
+  "email": "ashinzekene@gmail.com"
+}
+
+# { "query": "{ hello, square(x: 6), rand, getDie(numSides: 12){ rollOnce, roll(numRolls: 4) } }" }

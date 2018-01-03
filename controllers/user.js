@@ -27,17 +27,17 @@ module.exports = {
       })
   },
   create(req, res) {
-    let { username, email, fistname, lastname, bio, password } = req.body
+    let { username, email, firstname, lastname, bio, password } = req.body
     let user = new User()
     user.username = username
-    user.password = hash(password)
+    user.password = password
     user.email = email
     bio ? user.bio = bio : null
     firstname ? user.firstname = firstname : null
     lastname ? user.lastname = lastname : null
     user.save()
       .then(user => {
-        user.token = signJWT(user._id, username)
+        // user.token = signJWT(user._id, username)
         res.json(user)
       })
       .catch(err => {
@@ -54,7 +54,7 @@ module.exports = {
         if (!user) {
           return res.status(403).json({ result: "Username or password is not correct" })          
         }
-        user.token = signJWT(user._id, user.username)
+        // user.token = signJWT(user._id, user.username)
         res.json(user)
       })
       .catch(err => {
@@ -77,5 +77,14 @@ module.exports = {
       .catch(err => {
         res.status(403).json({ err: "An error occurred, could not update account" })
       })
-    }
+    },
+  all(req, res) {
+    User.find()
+      .then(users => {
+        res.json(users)
+      })
+      .catch(err => {
+        res.status(501).json({ err: "Could not retieve all users" })
+      })
+  }
 }

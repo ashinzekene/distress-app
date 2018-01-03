@@ -6,7 +6,10 @@ mongoose.Promise = require('bluebird')
 const app = express()
 const port = process.env.PORT || 4321
 
-app.use(bodyParser({extended: false}))
+require('./utils/mongoose')
+
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
 
 app.use('/', routes)
 

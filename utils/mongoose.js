@@ -1,12 +1,10 @@
 var mongoose = require('mongoose');
 var gracefulShutdown;
-// var dbURI = "mongodb://127.0.0.1/vdc"
-var dbURI = process.env.MONGO_URL
+var dbURI = process.env.MONGO_URL || "mongodb://127.0.0.1/vdc"
 
 mongoose.connect(dbURI, {useMongoClient: true}, (err) => {
   if (err) {
-    console.log("Couldn't connect to DB. Falling back to local mongo");
-    mongoose.connect("mongodb://127.0.0.1/vdc", { useMongoClient: true });
+    console.log("Couldn't connect to DB");
   }
 });
 
