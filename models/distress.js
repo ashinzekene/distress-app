@@ -9,7 +9,7 @@ const distressSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User',
   },
-  supports: [{
+  approves: [{
     type: Schema.Types.ObjectId,
     ref: 'User',
   }],

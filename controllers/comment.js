@@ -27,5 +27,23 @@ module.exports = {
       .catch(err => {
         res.status(501).json({ err: 'Could not fetch all comments' })
       })
+  },
+  distressComments(req, res) {
+    Comment.find({ distress: req.params.distress })
+      .then(comment => {
+        res.json(comment)
+      })
+      .catch(err => {
+        res.status(501).json({ err: 'Could not fetch all comments for this distress' })        
+      })
+  },
+  commentComments(req, res) {
+    Comment.find({ comment: req.params.distress })
+      .then(comment => {
+        res.json(comment)
+      })
+      .catch(err => {
+        res.status(501).json({ err: 'Could not fetch all comments for this comment' })        
+      })
   }
 }

@@ -30,5 +30,23 @@ module.exports = {
       .catch(err => {
         res.status(403).json({ err: "An error occurred, could not fetch distrsses" })
       })
+  },
+  approve(req, res) {
+    Distress.findByIdAndUpdate(req.params.distress, { $addToSet: { approves: req.user._id } }, { new: true})
+      .then(distress => {
+        re.json(distress)
+      })
+      .catch(err => {
+        res.status(403).json({ err: "An error occured wgile apprroving distress" })
+      })
+  },
+  disprove(req, res) {
+    Distress.findByIdAndUpdate(req.params.distress, { $addToSet: { disproves: req.user._id } }, { new: true})
+      .then(distress => {
+        re.json(distress)
+      })
+      .catch(err => {
+        res.status(403).json({ err: "An error occured wgile apprroving distress" })
+      })
   }
 }
