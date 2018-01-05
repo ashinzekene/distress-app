@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var gracefulShutdown;
-var dbURI = process.env.MONGO_URL || "mongodb://127.0.0.1/vdc"
+var dbURI = process.env.MONGO_URL || "mongodb://127.0.0.1/distressapp"
 
 mongoose.connect(dbURI, {useMongoClient: true}, (err) => {
   if (err) {

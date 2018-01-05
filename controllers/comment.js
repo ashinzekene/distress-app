@@ -11,6 +11,9 @@ module.exports = {
       })
   },
   create(req, res) {
+    if (!req.body.distress) {
+      res.status(403).json({ err: 'Could not create comment, no distress' })      
+    } 
     Comment.create(req.body)
       .then(comment => {
         res.json(comment)
@@ -26,6 +29,22 @@ module.exports = {
       })
       .catch(err => {
         res.status(501).json({ err: 'Could not fetch all comments' })
+      })
+  },
+  search(req, res) {
+    let comment= {}
+    let { user, text, distress } = req.body 
+    comment.user = user
+    comment.text = text
+    comment.distress = distress
+    Comment.find(comment)
+      .limit(limit)
+      .skip(offset)
+      .then(comments => {
+        res.json(comments)
+      })
+      .catch(err => {
+        res.status(403).json({ err: "An error occurred, could not search distrsses" })
       })
   },
   distressComments(req, res) {

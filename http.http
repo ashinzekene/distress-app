@@ -3,8 +3,8 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "username": "Ekonash",
-  "password": "isioma",
+  "username": "ekonash",
+  "password": "ekonash",
   "email": "ashinzekene@gmail.com"
 }
 

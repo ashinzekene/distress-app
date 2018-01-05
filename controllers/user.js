@@ -1,5 +1,5 @@
 const User = require('../models/user')
-const { signJWT, hash } = require('../utils/auth')
+const { signJWT, hash } = require('../utils/auth')()
 
 module.exports = {
   getByUsername(req, res) {
@@ -37,10 +37,13 @@ module.exports = {
     lastname ? user.lastname = lastname : null
     user.save()
       .then(user => {
-        // user.token = signJWT(user._id, username)
+        user = user.toJSON()
+        user.token = signJWT(user._id, username)
+        console.log(user.token)
         res.json(user)
       })
       .catch(err => {
+        console.log(err)
         if (err.code === 11000) {
           return res.status(403).json({ result: "You already have an account" })
         }
@@ -54,7 +57,7 @@ module.exports = {
         if (!user) {
           return res.status(403).json({ result: "Username or password is not correct" })          
         }
-        // user.token = signJWT(user._id, user.username)
+        user.token = signJWT(user._id, user.username)
         res.json(user)
       })
       .catch(err => {
@@ -85,6 +88,15 @@ module.exports = {
       })
       .catch(err => {
         res.status(501).json({ err: "Could not retieve all users" })
+      })
+  },
+  removeAll(req, res) {
+    User.remove()
+      .then(users => {
+        res.json(users)
+      })
+      .catch(err => {
+        res.status(403).json({ err: "Could not reomve all users" })
       })
   }
 }
