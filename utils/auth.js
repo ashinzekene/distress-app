@@ -11,7 +11,7 @@ const secretOrKey = process.env.SECRET || "distressapp";
 const JWTStrategy = passportJWT.Strategy
 
 const jwtOptions = {
-  jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken("token"),
+  jwtFromRequest: ExtractJWT.fromBodyField("token"),
   expiresIn: '14d',
   secretOrKey,
   issuer
@@ -32,6 +32,7 @@ function signJWT(id, username) {
 }
 
 passport.use(new JWTStrategy(jwtOptions, (payload, done) => {
+  console.log("jkdkfdjfdkj")
   Users.findById(payload.id, (err, user)=> {
     if(err) return done(err)
     if (user) return done(null, user)

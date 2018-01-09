@@ -38,6 +38,7 @@ module.exports = {
     user.save()
       .then(user => {
         user = user.toJSON()
+        delete user.password
         user.token = signJWT(user._id, username)
         console.log(user.token)
         res.json(user)
@@ -50,15 +51,18 @@ module.exports = {
         res.status(403).json({ err: "An error occurred, could not create account" })
       })
   },
-  login() {
+  verifyToken(req, res) {
+    return res.json(req.user)
+  },
+  login(req, res) {
     let { username, password, email } = req.body 
     User.findOne({ username, password }, "-password")
       .then(user => {
         if (!user) {
           return res.status(403).json({ result: "Username or password is not correct" })          
         }
-        user.token = signJWT(user._id, user.username)
-        res.json(user)
+        let userWithToken = Object.assign({}, user.toJSON(), { token: signJWT(user._id, user.username) })
+        res.json(userWithToken)
       })
       .catch(err => {
         res.status(403).json({ err: "An error occurred, could not retrieve your account" })

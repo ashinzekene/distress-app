@@ -1,11 +1,13 @@
-POST http://localhost:4321/users/new
+GET http://localhost:4321/users/me
 Content-Type: application/json
-Accept: application/json
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVhNGZjZWVlYTliNzVjMTExYzdkOTVjMiIsInVzZXJuYW1lIjoiZWtvbmFzaCIsImlhdCI6MTUxNTMyOTkyMSwiZXhwIjoxNTE2NTM5NTIxfQ.M0TMsRdXu-lkO1sbZg0rg7rfSvwj_1aOrSDJIAOlAO0
+
 
 {
   "username": "ekonash",
   "password": "ekonash",
-  "email": "ashinzekene@gmail.com"
+  "email": "ashinzekene@gmail.com",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVhNGZjZWVlYTliNzVjMTExYzdkOTVjMiIsInVzZXJuYW1lIjoiZWtvbmFzaCIsImlhdCI6MTUxNTMzMjk4NCwiZXhwIjoxNTE2NTQyNTg0fQ.3yo6tF6X6WLqGVOfRLQSa37UO-eOIEfg_NwM0VgxPHA"
 }
 
 # { "query": "{ hello, square(x: 6), rand, getDie(numSides: 12){ rollOnce, roll(numRolls: 4) } }" }

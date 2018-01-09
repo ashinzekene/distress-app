@@ -22,7 +22,7 @@ const userSchema = new Schema({
   ip: String,
   lastSeen: String,
   following: String
-})
+}, { timestamps: true })
 
 const User = mongoose.model('User', userSchema)
 

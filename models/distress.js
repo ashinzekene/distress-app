@@ -28,7 +28,7 @@ const distressSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User',
   }],
-})
+}, { timestamps: true })
 
 const Distress = mongoose.model('Distress', distressSchema)
 

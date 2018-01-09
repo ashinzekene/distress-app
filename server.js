@@ -7,6 +7,7 @@ const app = express()
 const port = process.env.PORT || 4321
 
 require('./utils/mongoose')
+require('./utils/auth')(app)
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
