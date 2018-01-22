@@ -1,0 +1,32 @@
+<app-hero></app-hero>
+<div class="container py-5">
+
+  <div class="card-deck">
+    <div *ngFor="let distress of distresses" class="card">
+      <img class="card-img-top" src="/assets/img.jpg" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title">{{distress.title }}</h5>
+        <p class="card-text">{{ distress.description }}</p>
+      </div>
+      <div class="card-footer bg-white" style="border: none">
+        <a [routerLink]="['/distress/'+distress._id]" class="btn btn-primary">Read more...</a>
+      </div>
+      <div class="card-footer">
+        <small class="text-muted">{{ distress.createdAt | date }}</small>
+      </div>
+    </div>
+    <div class="card">
+      <img class="card-img-top" src="/assets/img.jpg" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title">Police Bribery</h5>
+        <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+      </div>
+      <div class="card-footer bg-white" style="border: none">
+        <a href="#" class="btn btn-primary">Read more...</a>
+      </div>
+      <div class="card-footer">
+        <small class="text-muted">Last updated 3 mins ago</small>
+      </div>
+    </div>
+  </div>
+</div>

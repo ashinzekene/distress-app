@@ -1,0 +1,18 @@
+<div class="distress row container py-5">
+  <div class="col-lg-9 py-4 pl-4 col-md-8">
+    <h2 class="display-4">{{ distress.title }}</h2>
+    <div class="lead">
+      <p *ngFor="let tag of distress.tags">{{ tag }},</p>
+    </div>
+    <div class="h5">CATEGORY: {{ distress.category }}</div>
+    <div class="h5">LOCATION: {{ distress.location }}</div>
+    <div class="py-3">
+      <div class="pt-4">{{ distress.description }}</div>
+    </div>
+  </div>
+
+  <div class="col-lg-3 py-4 col-md-4 visible-md-up">
+    <app-sidebar></app-sidebar>
+  </div>
+
+</div>

@@ -1,0 +1,12 @@
+.my-hero {
+  display: flex;
+  height: 80vh;
+  justify-content: center;
+  align-items: center;
+  justify-items: center;
+  flex-wrap: wrap;
+}
+.my-hero .tagline {
+  font-size: 30px;
+  font-weight: 500;
+}

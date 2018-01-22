@@ -1,0 +1,30 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark my-header px-3">
+  <a class="navbar-brand pr-5" [routerLink]="['/']">Distress App</a>
+
+  <button class="navbar-toggler navbar-toggler-right" type="button" (click)="navbarCollapsed = !navbarCollapsed" [attr.aria-expanded]="!navbarCollapsed"
+    aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" [ngbCollapse]="navbarCollapsed" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" [routerLink]="['/']">Home
+          <span class="sr-only">(current)</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/']">Features</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/']">Pricing</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" [routerLink]="['/']">Disabled</a>
+      </li>
+    </ul>
+  </div>
+  <div class="form-inline">
+    <a class="btn btn-bg btn-success" [routerLink]="['/create']">Create Distress</a>
+  </div>
+</nav>
