@@ -6,7 +6,7 @@ const routes = require('./routes/index')
 mongoose.Promise = require('bluebird')
 const app = express()
 const port = process.env.PORT || 4321
-const isProduction = process.env.PROD === true
+const isProduction = process.env.NODE_ENV === "production"
 
 require('./utils/mongoose')
 require('./utils/auth')(app)
@@ -23,11 +23,15 @@ if(!isProduction) {
     next()
   })
 }
-
+app.use(express.static(path.join(__dirname, 'dist')));
 app.options('*', (req, res) =>{
   res.json({ res: "pre-flight" })
 })
 app.use('/api', routes)
+app.get('*', function(req, res) {
+  res.sendFile(path.join(__dirname + '/dist/index.html'));
+});
+
 app.get("/google-oauth-callback", (req, res) => {
   console.log(req.user)
   res.json(req.user)
