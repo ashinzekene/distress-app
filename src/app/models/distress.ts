@@ -5,7 +5,7 @@ export class Distress {
   location: string;
   ip: string;
   category: string;
-  tags: string;
+  tags: string[];
   approves: string[];
   comments: string[];
   dispproves: string[];

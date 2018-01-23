@@ -25,6 +25,9 @@
 !.vscode/launch.json
 !.vscode/extensions.json
 
+.env
+src/app/config.ts
+
 # misc
 /.sass-cache
 /connect.lock

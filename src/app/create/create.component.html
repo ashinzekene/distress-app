@@ -1,17 +1,28 @@
 <div class="create my-5 mx-3">
-  <div class="display-5 text-center">Create a Distress</div>
+  <div class="display-5 p-5 text-center">Create a Distress</div>
 
-  <div class="container">
+  <div class="container row">
     <div class="col-sm-12 col-md-4 col-lg-6">
       <div class="custom-file">
         <input ng2FileSelect [uploader]="uploader" multiple type="file" class="custom-file-input" id="customFile">
         <label class="custom-file-label" for="customFile">Choose file</label>
+      </div>
+      <div class="maps hidden-md-down py-3">
+        <agm-map [latitude]="map.latitude" [longitude]="map.longitude" [scrollwheel]="false" [zoom]="map.zoomLevel">
+          <agm-marker [latitude]="map.latitude" [longitude]="map.longitude"></agm-marker>
+        </agm-map>
       </div>
     </div>
     <form (ngSubmit)="onSubmit()" #heroForm="ngForm" class="col-md-8 col-lg-6 m-auto" action="">
       <div class="form-group">
         <label for="distress-title" class="form-label">Title</label>
         <input required class="form-control" type="text" [(ngModel)]="distress.title" name="title" id="distress-title">
+      </div>
+      <div class="form-group">
+        <label for="distress-tags" class="form-label">Tags</label>
+        <tag-input class="form-control" [(ngModel)]="distress.tags" name="tags" [editable]="true" [maxItems]="5" [ripple]="false"
+          [separatorKeys]="[',',' ']" (onTagEdited)="onTagEdited($event)">
+        </tag-input>
       </div>
       <div class="form-group">
         <label for="distress-category" class="form-label">Category</label>
