@@ -1,8 +1,8 @@
-<div class="create my-5 mx-3">
+<div class="create my-2 mx-3">
   <div class="display-5 p-5 text-center">Create a Distress</div>
 
   <div class="container row">
-    <div class="col-sm-12 col-md-4 col-lg-6">
+    <div class="col-sm-12 col-md-4 col-lg-4">
       <div class="custom-file">
         <input ng2FileSelect [uploader]="uploader" multiple type="file" class="custom-file-input" id="customFile">
         <label class="custom-file-label" for="customFile">Choose file</label>
@@ -13,14 +13,14 @@
         </agm-map>
       </div>
     </div>
-    <form (ngSubmit)="onSubmit()" #heroForm="ngForm" class="col-md-8 col-lg-6 m-auto" action="">
+    <form (ngSubmit)="onSubmit()" #heroForm="ngForm" class="col-md-8 col-lg-8 m-auto" action="">
       <div class="form-group">
         <label for="distress-title" class="form-label">Title</label>
         <input required class="form-control" type="text" [(ngModel)]="distress.title" name="title" id="distress-title">
       </div>
       <div class="form-group">
         <label for="distress-tags" class="form-label">Tags</label>
-        <tag-input class="form-control" [(ngModel)]="distress.tags" name="tags" [editable]="true" [maxItems]="5" [ripple]="false"
+        <tag-input class="form-control" [(ngModel)]="tags" name="tags" [editable]="true" [maxItems]="5" [ripple]="false"
           [separatorKeys]="[',',' ']" (onTagEdited)="onTagEdited($event)">
         </tag-input>
       </div>
@@ -32,14 +32,14 @@
       </div>
       <div class="form-group">
         <label for="distress-location" class="form-label">Location</label>
-        <input #search required class="form-control" type="text" [(ngModel)]="distress.location" name="location" id="distress-location">
+        <input #search required class="form-control" type="text" [(ngModel)]="location" name="location" id="distress-location">
       </div>
       <div class="form-group">
         <label for="distress-description" class="form-label">Description</label>
         <textarea required class="form-control" id="distress-description" [(ngModel)]="distress.description" name="description" id=""
           cols="30" rows="10"></textarea>
       </div>
-      <button class="btn btn-success" [disabled]="!heroForm.form.valid" type="submit">Submit</button>
+      <button class="btn btn-primary btn-lg" [disabled]="!heroForm.form.valid || showLoading" type="submit"><i [hidden]="!showLoading" class="fa fa-spinner fa-spin fa-fw"> </i> Broadcast Distress</button>
     </form>
   </div>
 </div>

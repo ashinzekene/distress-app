@@ -14,7 +14,9 @@ const distressSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User',
   }],
-  location: String,
+  location: {
+    type: { name: String, points: [Number]}
+  },
   ip: String,
   tags: [String],
   category: {

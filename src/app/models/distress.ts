@@ -2,7 +2,7 @@ export class Distress {
   title: string;
   description: string;
   author: string;
-  location: string;
+  location: { name: string, points?: number[] };
   ip: string;
   category: string;
   tags: string[];

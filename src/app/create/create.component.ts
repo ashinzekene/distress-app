@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { AgmCoreModule, MapsAPILoader } from '@agm/core';
 import { FileUploader, FileUploaderOptions, ParsedResponseHeaders } from 'ng2-file-upload';
 import { Cloudinary } from '@cloudinary/angular-5.x';
-import {} from '@types/googlemaps'; 
+import { } from '@types/googlemaps';
 
 import { Categories, Distress } from "../models";
 import { ApiService } from "../core";
@@ -15,19 +15,20 @@ import { environment } from '../../environments/environment';
   styleUrls: ['./create.component.css']
 })
 export class CreateComponent implements OnInit {
-  categories:string[] = Categories
-  public uploader: FileUploader = new FileUploader({url: environment.api_url+""});
+  categories: string[] = Categories
+  public uploader: FileUploader = new FileUploader({ url: environment.api_url + "" });
   @ViewChild("search")
   public searchElementRef: ElementRef;
 
-  distress: Partial<Distress>= {
+  distress: Partial<Distress> = {
     title: "",
     category: "",
     description: "",
-    location: "",
-    tags: []
   }
-  map:any
+  map: any
+  tags: any[]
+  location: string
+  showLoading: boolean = false
 
 
   constructor(
@@ -35,21 +36,19 @@ export class CreateComponent implements OnInit {
     private cloudinary: Cloudinary,
     private router: Router,
     private mapsApiLoader: MapsAPILoader,
-    private ngZone: NgZone ) {
+    private ngZone: NgZone) {
   }
 
   onSubmit() {
-    this.apiService.post('/distress/new', this.distress)
-      .subscribe((distress: Distress) => {
-        console.log("Created")
-        this.goHome()
-      })
+    this.showLoading = true
+    let distress = Object.assign({}, this.distress, { tags: this.tags.map(tag => tag.value) })
+    // this.apiService.post('/distress/new', this.distress)
+    //   .subscribe((distress: Distress) => {
+    //     this.showLoading = false
+    //     this.router.navigateByUrl('/')
+    //   })
   }
 
-  goHome() {
-    this.router.navigateByUrl('/')
-  }
-  
   ngOnInit() {
     this.map = {
       latitude: 6.54837,
@@ -60,12 +59,14 @@ export class CreateComponent implements OnInit {
     this.mapsApiLoader.load().then(() => {
       let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
         types: ["address"],
-        componentRestrictions: { country: "ng"}
+        componentRestrictions: { country: "ng" }
       })
       autocomplete.addListener('place_changed', () => {
-        this.ngZone.run(()=> {
+        this.ngZone.run(() => {
           place = autocomplete.getPlace()
-          console.log("Location is ", place, [place.geometry.location.lat(), place.geometry.location.lng()]);
+          console.log("Location is ", place);
+          // set result on imput element
+          this.location = place.formatted_address
           //verify result
           if (!place.geometry) {
             return;
@@ -73,7 +74,14 @@ export class CreateComponent implements OnInit {
           //set latitude, longitude and zoom
           this.map.latitude = place.geometry.location.lat();
           this.map.longitude = place.geometry.location.lng();
-          this.map.zoomLevel = 16;
+          this.map.zoomLevel = 14;
+
+          // set the location on distress
+          this.distress.location = {
+            name: place.formatted_address,
+            points: [place.geometry.location.lat(), place.geometry.location.lng()]
+          }
+
         })
       })
     })
