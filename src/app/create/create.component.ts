@@ -1,7 +1,6 @@
 import { Component, OnInit, ElementRef, ViewChild, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { AgmCoreModule, MapsAPILoader } from '@agm/core';
-import { FileUploader, FileUploaderOptions, ParsedResponseHeaders } from 'ng2-file-upload';
 import { Cloudinary } from '@cloudinary/angular-5.x';
 import { } from '@types/googlemaps';
 
@@ -16,7 +15,6 @@ import { environment } from '../../environments/environment';
 })
 export class CreateComponent implements OnInit {
   categories: string[] = Categories
-  public uploader: FileUploader = new FileUploader({ url: environment.api_url + "" });
   @ViewChild("search")
   public searchElementRef: ElementRef;
 
@@ -86,24 +84,5 @@ export class CreateComponent implements OnInit {
       })
     })
 
-    //Cloudinary config
-    const uploaderOptions: FileUploaderOptions = {
-      url: `https://api.cloudinary.com/v1_1/${this.cloudinary.config().cloud_name}/upload`,
-      // Upload files automatically upon addition to upload queue
-      autoUpload: true,
-      // Use xhrTransport in favor of iframeTransport
-      isHTML5: true,
-      // Calculate progress independently for each uploaded file
-      removeAfterUpload: true,
-      // XHR request headers
-      headers: [
-        {
-          name: 'X-Requested-With',
-          value: 'XMLHttpRequest'
-        }
-      ]
-    };
-    this.uploader = new FileUploader(uploaderOptions);
   }
-
 }

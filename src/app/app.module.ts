@@ -7,7 +7,6 @@ import { SharedModule } from "./shared/shared.module";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { AgmCoreModule } from "@agm/core";
-import { FileUploadModule } from 'ng2-file-upload'
 import { TagInputModule } from 'ngx-chips';
 import { CloudinaryModule, CloudinaryConfiguration, provideCloudinary } from '@cloudinary/angular-5.x';
 import { cloudinary_config, googleApiKey } from "./config";
@@ -37,7 +36,6 @@ import { DistressListComponent } from './distress-list/distress-list.component';
     AppRoutingModule,
     TagInputModule,
     BrowserAnimationsModule,
-    FileUploadModule,
     CloudinaryModule.forRoot(cloudinary, cloudinary_config),
     AgmCoreModule.forRoot({
       apiKey: googleApiKey,

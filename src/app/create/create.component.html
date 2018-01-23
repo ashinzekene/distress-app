@@ -3,10 +3,7 @@
 
   <div class="container row">
     <div class="col-sm-12 col-md-4 col-lg-4">
-      <div class="custom-file">
-        <input ng2FileSelect [uploader]="uploader" multiple type="file" class="custom-file-input" id="customFile">
-        <label class="custom-file-label" for="customFile">Choose file</label>
-      </div>
+      <image-upload></image-upload>
       <div class="maps hidden-md-down py-3">
         <agm-map [latitude]="map.latitude" [longitude]="map.longitude" [scrollwheel]="false" [zoom]="map.zoomLevel">
           <agm-marker [latitude]="map.latitude" [longitude]="map.longitude"></agm-marker>
