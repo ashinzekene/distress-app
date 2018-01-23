@@ -1,14 +1,15 @@
-<div class="row p-5 margin-for-header"></div>
-<div class="container p-3">
-  <div *ngFor="let distress of distresses" class="card" style="width: 18rem;">
+<div class="container row p-3">
+  <div *ngFor="let distress of distresses" class="card m-3" style="width: 18rem;">
     <div class="card-body">
       <h5 class="card-title">{{ distress.title }}</h5>
       <h6 class="card-subtitle mb-2 text-muted">{{ distress.tags.join(", ") }}</h6>
       <p class="card-text">{{ distress.description }}</p>
-      <a [routerLink]="['/distress'+distress._id]" class="card-link">View this distress</a>
     </div>
-    <div class="footer">
-      <div class="card-body">{{ distress.createdAt | date }}</div>
+    <div class="card-footer bg-white border-0">
+      <a [routerLink]="['/distress/'+distress._id]" class="btn btn-primary">View this distress</a>
+    </div>
+    <div class="card-footer">
+      {{ distanceInWords(distress.createdAt, true) }}
     </div>
   </div>
 </div>
