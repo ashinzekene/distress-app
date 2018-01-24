@@ -3,7 +3,6 @@
 
   <div class="container row">
     <div class="col-sm-12 col-md-4 col-lg-4">
-      <image-upload></image-upload>
       <div class="maps hidden-md-down py-3">
         <agm-map [latitude]="map.latitude" [longitude]="map.longitude" [scrollwheel]="false" [zoom]="map.zoomLevel">
           <agm-marker [latitude]="map.latitude" [longitude]="map.longitude"></agm-marker>
@@ -18,7 +17,7 @@
       <div class="form-group">
         <label for="distress-tags" class="form-label">Tags</label>
         <tag-input class="form-control" [(ngModel)]="tags" name="tags" [editable]="true" [maxItems]="5" [ripple]="false"
-          [separatorKeys]="[',',' ']" (onTagEdited)="onTagEdited($event)">
+          [separatorKeys]="[',',' ']">
         </tag-input>
       </div>
       <div class="form-group">
