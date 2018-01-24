@@ -18,7 +18,7 @@ const routes: Routes = [
   { path: 'top-distresses', component: DistressListComponent, data: { type: 'top' } },
   { path: 'distress/:id', component: DistressComponent, resolve: { distress: DistressResolver } },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: '*', component: NotFoundComponent },
+  { path: '**', component: NotFoundComponent, pathMatch: 'prefix' },
 ];
 
 @NgModule({
