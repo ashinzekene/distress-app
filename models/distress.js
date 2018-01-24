@@ -1,6 +1,5 @@
-const mongoose = require("mongoose")
-const Schema = mongoose.Schema
-const { categories } = require('../utils/constants')
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 const distressSchema = new Schema({
   title: String,
@@ -34,8 +33,8 @@ const distressSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User',
   }],
-}, { timestamps: true })
+}, { timestamps: true });
 
-const Distress = mongoose.model('Distress', distressSchema)
+const Distress = mongoose.model('Distress', distressSchema);
 
-module.exports = Distress
+module.exports = Distress;
