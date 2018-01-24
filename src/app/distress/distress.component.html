@@ -11,12 +11,22 @@
       <i>Location</i>: {{ distress.location }}
     </div>
     <div class="h5">
-      <button *ngFor="let tag of distress.tags" type="button" class="btn btn-primary rounded-circle">{{ tag }} </button>
+      <button *ngFor="let tag of distress.tags" type="button" class="btn btn-primary mr-2 px-3 rounded-circle">{{ tag }} </button>
     </div>
     <div class="py-3">
       <div class="pt-4 distress-text">{{ distress.description }}</div>
     </div>
     <hr class="p-5">
+    <div>
+      <div class="like pr-5 w-50 d-inline-block">
+        <i class="fa fa-thumbs-up fa-3x mr-5"></i>
+        approve
+      </div>
+      <div class="like pr-5 w-50 d-inline-block">
+        <i class="fa fa-thumbs-down fa-3x mr-5"></i>
+        disprove
+      </div>
+    </div>
     <div class="fb-share-button">
       <a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u&amp;src=sdkpreparse">Share</a>
     </div>
