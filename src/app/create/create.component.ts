@@ -1,7 +1,6 @@
 import { Component, OnInit, ElementRef, ViewChild, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { AgmCoreModule, MapsAPILoader } from '@agm/core';
-import { Cloudinary } from '@cloudinary/angular-5.x';
 import { } from '@types/googlemaps';
 
 import { Categories, Distress } from "../models";
@@ -31,7 +30,6 @@ export class CreateComponent implements OnInit {
 
   constructor(
     private apiService: ApiService,
-    private cloudinary: Cloudinary,
     private router: Router,
     private mapsApiLoader: MapsAPILoader,
     private ngZone: NgZone) {

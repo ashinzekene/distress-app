@@ -1,23 +1,15 @@
 <div class="create my-2 mx-3">
   <div class="display-5 p-5 text-center">Create a Distress</div>
 
-  <div class="container row">
-    <div class="col-sm-12 col-md-4 col-lg-4">
-      <div class="maps hidden-md-down py-3">
-        <agm-map [latitude]="map.latitude" [longitude]="map.longitude" [scrollwheel]="false" [zoom]="map.zoomLevel">
-          <agm-marker [latitude]="map.latitude" [longitude]="map.longitude"></agm-marker>
-        </agm-map>
-      </div>
-    </div>
-    <form (ngSubmit)="onSubmit()" #heroForm="ngForm" class="col-md-8 col-lg-8 m-auto" action="">
+  <div class="row mx-4 pb-4">
+    <form (ngSubmit)="onSubmit()" #heroForm="ngForm" class="col-md-8 col-lg-8 col-xl-7 m-auto" action="">
       <div class="form-group">
         <label for="distress-title" class="form-label">Title</label>
         <input required class="form-control" type="text" [(ngModel)]="distress.title" name="title" id="distress-title">
       </div>
       <div class="form-group">
         <label for="distress-tags" class="form-label">Tags</label>
-        <tag-input class="form-control" [(ngModel)]="tags" name="tags" [editable]="true" [maxItems]="5" [ripple]="false"
-          [separatorKeys]="[',',' ']">
+        <tag-input class="form-control" [(ngModel)]="tags" name="tags" [editable]="true" [maxItems]="5" [ripple]="false" [separatorKeys]="[',',' ']">
         </tag-input>
       </div>
       <div class="form-group">
@@ -35,7 +27,17 @@
         <textarea required class="form-control" id="distress-description" [(ngModel)]="distress.description" name="description" id=""
           cols="30" rows="10"></textarea>
       </div>
-      <button class="btn btn-primary btn-lg" [disabled]="!heroForm.form.valid || showLoading" type="submit"><i [hidden]="!showLoading" class="fa fa-spinner fa-spin fa-fw"> </i> Broadcast Distress</button>
+      <button class="btn btn-primary btn-lg" [disabled]="!heroForm.form.valid || showLoading" type="submit">
+        <i [hidden]="!showLoading" class="fa fa-spinner fa-spin fa-fw"> </i> Broadcast Distress</button>
     </form>
+
+    <div class="col-sm-12 col-md-4 col-lg-4 col-xl-5">
+      <div class="maps hidden-md-down py-3">
+        <agm-map [latitude]="map.latitude" [longitude]="map.longitude" [scrollwheel]="false" [zoom]="map.zoomLevel">
+          <agm-marker [latitude]="map.latitude" [longitude]="map.longitude"></agm-marker>
+        </agm-map>
+      </div>
+    </div>
+
   </div>
 </div>

@@ -21,6 +21,8 @@ import { CreateComponent } from './create/create.component';
 import { HttpClientModule } from '@angular/common/http';
 import { DistressComponent } from './distress/distress.component';
 import { DistressListComponent } from './distress-list/distress-list.component';
+import { SearchComponent } from './search/search.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,9 @@ import { DistressListComponent } from './distress-list/distress-list.component';
     HomeComponent,
     CreateComponent,
     DistressComponent,
-    DistressListComponent
+    DistressListComponent,
+    SearchComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,

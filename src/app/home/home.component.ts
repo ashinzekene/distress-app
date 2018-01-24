@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     let params = {
       sort: "approves",
-      limit: 5
+      limit: 3
     }
     this.distressService.search(params)
       .subscribe((distresses: Distress[]) => {

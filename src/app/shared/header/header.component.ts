@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
   public navbarCollapsed: boolean = true;
+  public title:string = "Distress Reporter";
+  
   constructor() { }
 
   ngOnInit() {

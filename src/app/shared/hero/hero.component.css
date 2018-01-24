@@ -1,6 +1,7 @@
 .my-hero {
   display: flex;
   height: 80vh;
+  background-color: teal;
   justify-content: center;
   align-items: center;
   justify-items: center;
