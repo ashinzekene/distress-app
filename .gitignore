@@ -26,7 +26,7 @@
 !.vscode/extensions.json
 
 .env
-src/app/config.ts
+# src/app/config.ts
 
 # misc
 /.sass-cache

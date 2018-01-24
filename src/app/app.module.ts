@@ -8,9 +8,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { AgmCoreModule } from "@agm/core";
 import { TagInputModule } from 'ngx-chips';
-import { CloudinaryModule, CloudinaryConfiguration, provideCloudinary } from '@cloudinary/angular-5.x';
-import { cloudinary_config, googleApiKey } from "./config";
-import * as cloudinary from "cloudinary-core";
+// import { CloudinaryModule, CloudinaryConfiguration, provideCloudinary } from '@cloudinary/angular-5.x';
+import { googleApiKey } from "./config";
+// import * as cloudinary from "cloudinary-core";
 
 import { ApiService, JWTService, DistressService } from "./core";
 import { DistressResolver } from './distress-resolver.service';
@@ -36,7 +36,7 @@ import { DistressListComponent } from './distress-list/distress-list.component';
     AppRoutingModule,
     TagInputModule,
     BrowserAnimationsModule,
-    CloudinaryModule.forRoot(cloudinary, cloudinary_config),
+    // CloudinaryModule.forRoot(cloudinary, cloudinary_config),
     AgmCoreModule.forRoot({
       apiKey: googleApiKey,
       libraries: ["places"]
