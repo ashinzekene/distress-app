@@ -8,12 +8,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { AgmCoreModule } from "@agm/core";
 import { TagInputModule } from 'ngx-chips';
+import { SocialLoginModule, AuthServiceConfig } from "angular4-social-login";
+import { GoogleLoginProvider, FacebookLoginProvider } from "angular4-social-login";
+
+// import { AuthHttp, AuthConfig } from 'angular2-jwt';
 // import { CloudinaryModule, CloudinaryConfiguration, provideCloudinary } from '@cloudinary/angular-5.x';
-import { googleApiKey } from "./config";
 // import * as cloudinary from "cloudinary-core";
 
-import { ApiService, JWTService, DistressService } from "./core";
+import { ApiService, JWTService, DistressService, SocialAuthService } from "./core";
 import { DistressResolver } from './distress-resolver.service';
+import { FB_APP_ID, GOOGLE_CLIENT_ID, GOOGLE_MAPS_API_KEY } from "./config";
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -23,6 +27,18 @@ import { DistressComponent } from './distress/distress.component';
 import { DistressListComponent } from './distress-list/distress-list.component';
 import { SearchComponent } from './search/search.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+
+let config = new AuthServiceConfig([
+  {
+    id: GoogleLoginProvider.PROVIDER_ID,
+    provider: new GoogleLoginProvider(GOOGLE_CLIENT_ID)
+  },
+  {
+    id: FacebookLoginProvider.PROVIDER_ID,
+    provider: new FacebookLoginProvider(FB_APP_ID)
+  }
+]);
+ 
 
 @NgModule({
   declarations: [
@@ -40,9 +56,10 @@ import { NotFoundComponent } from './not-found/not-found.component';
     AppRoutingModule,
     TagInputModule,
     BrowserAnimationsModule,
+    SocialLoginModule.initialize(config),
     // CloudinaryModule.forRoot(cloudinary, cloudinary_config),
     AgmCoreModule.forRoot({
-      apiKey: googleApiKey,
+      apiKey: GOOGLE_MAPS_API_KEY,
       libraries: ["places"]
     }),
     FormsModule,
@@ -54,6 +71,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
     JWTService,
     DistressResolver,
     DistressService,
+    SocialAuthService,
   ],
   bootstrap: [AppComponent]
 })

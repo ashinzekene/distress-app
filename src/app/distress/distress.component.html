@@ -1,4 +1,4 @@
-<div class="distress-page row py-5 pl-5">
+<div class="distress-page row mx-2 py-5 pl-5">
   <div class="col-lg-8 col-xl-8 py-2 col-md-12">
     <h2 class="display-5 py-2">{{ distress.title }}</h2>
     <!-- <div class="lead">
@@ -17,21 +17,25 @@
       <div class="pt-4 distress-text">{{ distress.description }}</div>
     </div>
     <hr class="p-5">
-    <div>
-      <div class="like pr-5 w-50 d-inline-block">
+    <div class="container">
+      <div class="form-group my-3">
+        <textarea name="distress-comment" id="distress-comment" cols="30" rows="4" class="form-control"></textarea>
+      </div>
+      <div class="btn btn-lg btn-primary " (click)="comment()">Comment on this distress</div>
+      <div class="fb-share-button">
+        <a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u&amp;src=sdkpreparse">Share</a>
+      </div>
+    </div>
+    <!-- <div class="like pr-5 w-50 d-inline-block">
         <i class="fa fa-thumbs-up fa-3x mr-5"></i>
         approve
       </div>
       <div class="like pr-5 w-50 d-inline-block">
         <i class="fa fa-thumbs-down fa-3x mr-5"></i>
         disprove
-      </div>
-    </div>
-    <div class="fb-share-button">
-      <a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u&amp;src=sdkpreparse">Share</a>
-    </div>
+      </div> -->
   </div>
-  
+
   <div class="col-lg-4 col-xl-4 py-4 col-md-12 visible-md-up">
     <app-sidebar></app-sidebar>
   </div>
