@@ -18,7 +18,7 @@ const distressSchema = new Schema({
   },
   ip: String,
   tags: [String],
-  category: {
+  categories: {
     type: String,
   },
   comments: [{

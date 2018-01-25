@@ -60,14 +60,14 @@ module.exports = {
         res.json(distresses);
       })
       .catch(err => {
-        process.stdout.write(err);
+        process.stdout.write(JSON.stringify(err));
         res.status(403).json({ err: 'An error occurred, could not search distrsses' });
       });
   },
   search(req, res) {
     let distress= {};
     let { title, author, location, category, sort, limit, offset } = req.body; 
-    title ? distress.title = title : null;
+    title ? distress.title = RegExp(title, 'i') : null;
     author ? distress.author = author : null;
     location ? distress.location = location : null;
     category ? distress.category = category : null;
