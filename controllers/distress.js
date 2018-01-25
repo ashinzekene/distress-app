@@ -66,17 +66,16 @@ module.exports = {
   },
   search(req, res) {
     let distress= {};
-    let { title, author, location, category, sort, limit, offset } = req.body; 
+    let { title, author, location, orderBy, limit, offset } = req.body; 
     title ? distress.title = RegExp(title, 'i') : null;
     author ? distress.author = author : null;
     location ? distress.location = location : null;
-    category ? distress.category = category : null;
     limit = limit > 20 ? 20 : limit;
     offset = offset ? offset : 0;
     Distress.find(distress)
       .limit(limit)
       .skip(offset)
-      .sort(sort)
+      .sort(orderBy)
       .then(distresses => {
         res.json(distresses);
       })

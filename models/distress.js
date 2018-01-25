@@ -17,8 +17,8 @@ const distressSchema = new Schema({
     type: { name: String, points: [Number]}
   },
   ip: String,
-  tags: [String],
-  categories: {
+  tags: Schema.Types.Array,
+  category: {
     type: String,
   },
   comments: [{

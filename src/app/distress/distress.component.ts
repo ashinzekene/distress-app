@@ -27,6 +27,7 @@ export class DistressComponent implements OnInit {
   ngOnInit() {
     this.route.data.subscribe((data: { distress: Distress }) => {
       this.distress = data.distress
+      console.log(data.distress)
       this.meta.addTags([
         { name: 'og:url', content: window.location.href },
         { name: 'og:type', content: "article" },

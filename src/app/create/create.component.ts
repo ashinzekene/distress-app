@@ -23,8 +23,8 @@ export class CreateComponent implements OnInit {
     description: "",
   }
   map: any
-  tags: any[]
-  location: string
+  tags: any[] = []
+  location: string = ""
   showLoading: boolean = false
 
 
@@ -38,18 +38,20 @@ export class CreateComponent implements OnInit {
   onSubmit() {
     this.showLoading = true
     let distress = Object.assign({}, this.distress, { tags: this.tags.map(tag => tag.value) })
-    // this.apiService.post('/distress/new', this.distress)
-    //   .subscribe((distress: Distress) => {
-    //     this.showLoading = false
-    //     this.router.navigateByUrl('/')
-    //   })
+    console.log(distress)
+    this.apiService.post('/distress/new', this.distress)
+    .subscribe((distress: Distress) => {
+      console.log(distress)
+        this.showLoading = false
+        this.router.navigateByUrl('/')
+      })
   }
 
   ngOnInit() {
     this.map = {
       latitude: 6.54837,
       longitude: 3.14387,
-      zoomLevel: 11,
+      zoomLevel: 14,
     }
     let place
     this.mapsApiLoader.load().then(() => {
@@ -70,7 +72,6 @@ export class CreateComponent implements OnInit {
           //set latitude, longitude and zoom
           this.map.latitude = place.geometry.location.lat();
           this.map.longitude = place.geometry.location.lng();
-          this.map.zoomLevel = 14;
 
           // set the location on distress
           this.distress.location = {
