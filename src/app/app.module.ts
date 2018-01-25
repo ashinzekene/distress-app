@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from "./app-routing.module";
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+// import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SharedModule } from "./shared/shared.module";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
@@ -39,6 +39,9 @@ let config = new AuthServiceConfig([
   }
 ]);
  
+export function provideConfig() {
+  return config;
+}
 
 @NgModule({
   declarations: [
@@ -52,11 +55,11 @@ let config = new AuthServiceConfig([
   ],
   imports: [
     BrowserModule,
-    NgbModule.forRoot(),
+    // NgbModule.forRoot(),
     AppRoutingModule,
     TagInputModule,
     BrowserAnimationsModule,
-    SocialLoginModule.initialize(config),
+    SocialLoginModule,
     // CloudinaryModule.forRoot(cloudinary, cloudinary_config),
     AgmCoreModule.forRoot({
       apiKey: GOOGLE_MAPS_API_KEY,
@@ -72,6 +75,10 @@ let config = new AuthServiceConfig([
     DistressResolver,
     DistressService,
     SocialAuthService,
+    {
+      provide: AuthServiceConfig,
+      useFactory: provideConfig
+    }
   ],
   bootstrap: [AppComponent]
 })
