@@ -1,5 +1,12 @@
 # DistressApp
 
+## To Do
+[] - Register domains on google and facebook
+[] - commenting, approving and disapproving distresses
+[] - sorting distresss by location
+[] - sorting distresss by date
+[] - sorting distresss by category
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.5.
 
 ## Development server

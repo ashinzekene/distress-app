@@ -20,9 +20,15 @@ const jwtOptions = {
 };
 const JWTAuth = passport.authenticate('jwt', { session: false });
 
-const FBAuth = passport.authenticate('facebook');
+const FBAuth = {
+  initalize: () => passport.authenticate('facebook'),
+  callback: redirectUrl => passport.authenticate('facebook', { failureRedirect: redirectUrl }),
+};
 
-const GoogleAuth = passport.authenticate('google', { scope: ['profile'] });
+const GoogleAuth = {
+  initalize: () => passport.authenticate('google', { scope: ['profile'] }),
+  callback: redirectUrl => passport.authenticate('google', { failureRedirect: redirectUrl }),
+};
 
 function extractPayload(req, res, next) {
   if (typeof req.headers !== 'object') {

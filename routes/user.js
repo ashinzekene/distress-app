@@ -6,8 +6,15 @@ const router = express.Router();
 router.get('/', user.all);
 router.get('/me', JWTAuth, extractPayload, user.verifyToken);
 router.post('/login', user.login);
-router.get('/login/fb', FBAuth);
-router.get('/login/google', GoogleAuth);
+router.get('/login/fb', FBAuth.initalize());
+router.get('/login/google', GoogleAuth.initalize());
+
+router.get('/google-oauth-callback', (req, res) => {
+  res.json(req.user);
+});
+router.get('/fb-auth-callback', (req, res) => {
+  res.json(req.user);
+});
 
 router.post('/new', user.create);
 router.post('/remove-all', user.removeAll);
