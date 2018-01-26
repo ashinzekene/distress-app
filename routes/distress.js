@@ -1,14 +1,18 @@
 const express = require('express');
 const distress = require('../controllers/distress');
-const images = require('../controllers/image');
+const multer = require('multer');
+
+const upload = multer({ dest: 'uploads' })
+// const images = require('../controllers/image');
 const router = express.Router();
 
 router.get('/', distress.all);
 router.post('/new', distress.create);
-router.post('/imgs', images.images('images'), function (req, res) {
+router.post('/imgs', upload.any(), function (req, res) {
   // console.log('Files', req.files);
   // console.log('Body', req.body);
-  res.json(req.body);
+  console.log("Files", req.file);
+  res.json({ file: req.file && req.file.filename, body: req.body });
 });
 router.get('/search', distress.searchQuery);
 router.post('/search', distress.search);

@@ -18,6 +18,7 @@ export class HomeComponent implements OnInit {
     }
     this.distressService.search(params)
       .subscribe((distresses: Distress[]) => {
+        console.log("GOTTEN ", distresses)
         this.distresses = distresses
       })
   }

@@ -6,7 +6,7 @@ import { DistressService } from './core';
 
 
 @Injectable()
-export class DistressResolver implements Resolve<any> {
+export class TopDistressesResolver implements Resolve<any> {
   constructor(private distressService: DistressService, private router: Router) {}
 
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
