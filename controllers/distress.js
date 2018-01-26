@@ -15,6 +15,7 @@ module.exports = {
       });
   },
   create(req, res) {
+    console.log('Files',req.files);
     const { title, description, category, tags } = req.body;
     let distress= {};  
     distress.title = title;

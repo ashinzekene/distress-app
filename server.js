@@ -12,8 +12,8 @@ const isProduction = process.env.NODE_ENV === 'production';
 require('./utils/mongoose');
 require('./utils/auth')(app);
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json({limit: '6mb'}));
+app.use(bodyParser.urlencoded({ extended: true, limit: '6mb' }));
 
 if(!isProduction) {
   process.stdout.write('Not in production');
