@@ -27,6 +27,11 @@ export class CreateComponent implements OnInit {
   location: string = ""
   showLoading: boolean = false
 
+  sample_graphic_invalid = false
+  sample_graphic_selected = false
+  invalid_sample_graphic_text: string = ''
+  files = []  
+
 
   constructor(
     private apiService: ApiService,
@@ -37,16 +42,53 @@ export class CreateComponent implements OnInit {
 
   onSubmit() {
     this.showLoading = true
-    let distress = Object.assign({}, this.distress, { tags: this.tags.map(tag => tag.value) })
+    let images = this.files.map(img => img.file)
+    let distress = Object.assign({}, this.distress, { tags: this.tags.map(tag => tag.value), images })
     console.log(distress)
     this.apiService.post('/distress/new', this.distress)
-    .subscribe((distress: Distress) => {
-      console.log(distress)
+      .subscribe((distress: Distress) => {
+        console.log(distress)
         this.showLoading = false
         this.router.navigateByUrl('/')
       })
   }
 
+
+  uploadFile(e) {
+    let fileList: FileList = e.target.files
+    if (fileList.item(0) && fileList.item(0).size > 2048000) {
+      this.sample_graphic_invalid = true
+      this.sample_graphic_selected = true
+      this.invalid_sample_graphic_text = `The image size is ${(fileList.item(0).size / 1024000).toFixed(3)}MB. Should be less than 2MB`
+      return
+    }
+    if (fileList.item(0).type.indexOf("image") === -1) {
+      this.sample_graphic_invalid = true
+      this.sample_graphic_selected = true
+      this.invalid_sample_graphic_text = `The selected file format is not supported. Please upload a PNG/GIF/JPG file `
+      return
+    }
+    this.sample_graphic_invalid = false
+    this.sample_graphic_selected = true
+    this.invalid_sample_graphic_text = ""
+    this.insertImage(fileList.item(0))
+  }
+  
+  insertImage(file: File) {
+    // var reader: FileReader = new FileReader()
+    let url = window.URL.createObjectURL(file)
+    this.files.push({ file, url})
+    console.log(this.files)
+    // reader.readAsDataURL(file)
+    // reader.onload = (e: any) => {
+    //   this.previewImage.nativeElement.src = e.target.result
+    // }
+  }
+
+  removeImage(i) {
+    this.files = this.files.filter((img, ind) => ind !== i)
+  }
+  
   ngOnInit() {
     this.map = {
       latitude: 6.54837,

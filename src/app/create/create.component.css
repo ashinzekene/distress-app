@@ -1,3 +1,17 @@
 agm-map {
   height: 300px;
 }
+div.my-image {
+  width: 200px;
+  height: 200px;
+  position: relative;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+span.remove-img {
+  position: absolute;
+  border-radius: 50%;
+  cursor: pointer;
+  background: rgba(20,20,20,0.2) 
+}
