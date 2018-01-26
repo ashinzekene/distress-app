@@ -27,6 +27,7 @@ import { DistressComponent } from './distress/distress.component';
 import { DistressListComponent } from './distress-list/distress-list.component';
 import { SearchComponent } from './search/search.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { TopDistressesResolver } from './top-distresses-resolver.service';
 
 let config = new AuthServiceConfig([
   {
@@ -75,6 +76,7 @@ export function provideConfig() {
     DistressResolver,
     DistressService,
     SocialAuthService,
+    TopDistressesResolver,
     {
       provide: AuthServiceConfig,
       useFactory: provideConfig

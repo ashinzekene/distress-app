@@ -8,6 +8,7 @@ import { DistressResolver } from './distress-resolver.service';
 import { DistressListComponent } from './distress-list/distress-list.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { SearchComponent } from './search/search.component';
+import { TopDistressesResolver } from './top-distresses-resolver.service';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent  },
@@ -15,7 +16,7 @@ const routes: Routes = [
   { path: 'search', component: SearchComponent, data: { type: 'search' } },
   { path: 'explore', component: SearchComponent, data: { type: 'explore' } },
   { path: 'distresses', component: DistressListComponent, data: { type: 'all' } },
-  { path: 'top-distresses', component: DistressListComponent, data: { type: 'top' } },
+  { path: 'top-distresses', component: DistressListComponent, data: { type: 'top' }, resolve: { distresses: TopDistressesResolver } },
   { path: 'distress/:id', component: DistressComponent, resolve: { distress: DistressResolver } },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', component: NotFoundComponent, pathMatch: 'prefix' },

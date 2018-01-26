@@ -12,7 +12,7 @@ function fileFilter(req, file, cb) {
 }
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'uploads/dc');
+    cb(null, 'uploads');
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + file.originalname);
@@ -21,10 +21,10 @@ const storage = multer.diskStorage({
 const upload = multer({ storage, fileFilter });
 
 module.exports = {
-  images: (field) => upload.array(field, 5),
-  image: (field) => upload.single(field),
-  upload: (req, res) => {
-    cloudinary.uploader.upload()
+  images: field => upload.array(field, 5),
+  image: field => upload.single(field),
+  upload: () => {
+    cloudinary.uploader.upload();
   }
 };
 

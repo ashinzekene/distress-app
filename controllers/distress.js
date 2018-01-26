@@ -15,7 +15,10 @@ module.exports = {
       });
   },
   create(req, res) {
-    console.log('Files',req.files);
+    let images = [];
+    if (req.files) {
+      images = req.files.map(img => img.filename);
+    }
     const { title, description, category, tags } = req.body;
     let distress= {};  
     distress.title = title;
@@ -23,7 +26,8 @@ module.exports = {
     distress.category = category;
     distress.tags = tags;
     distress.ip = req.ip;
-    process.stdout.write('creating distress', distress);
+    images.length ? distress.images = images : null;
+    process.stdout.write('\ncreating distress', distress);
     Distress.create(distress)
       .then(distress => {
         res.json(distress);

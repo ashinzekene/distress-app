@@ -14,6 +14,10 @@ require('./utils/auth')(app);
 
 app.use(bodyParser.json({limit: '6mb'}));
 app.use(bodyParser.urlencoded({ extended: true, limit: '6mb' }));
+app.use((req, res, next) => {
+  console.log(req.url);
+  next();
+});
 
 if(!isProduction) {
   process.stdout.write('Not in production');
