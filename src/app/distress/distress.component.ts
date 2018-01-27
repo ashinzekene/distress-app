@@ -32,6 +32,7 @@ export class DistressComponent implements OnInit {
       if (!user) {
         this.socialAuth.signIn(provider).then(user => {
           this.userService.createUser(user).subscribe(dbUser => {
+            console.log("new user", dbUser)
             this.user = dbUser
             this.isAuth = !!dbUser
           })
@@ -76,7 +77,6 @@ export class DistressComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.signIn()
     this.route.data.subscribe((data: { distress: Distress }) => {
       this.distress = data.distress
       console.log(data.distress)
@@ -87,6 +87,7 @@ export class DistressComponent implements OnInit {
         { name: 'og:description', content: data.distress.description.substring(0, 51) },
         { name: 'og:keywords', content: data.distress.tags && data.distress.tags.join(",") }
       ])
+      this.signIn()
       this.getComments(data.distress._id)
     })
   }
