@@ -1,8 +1,9 @@
 const Comment = require('../models/comment');
+const User = require('../models/user');
 
 module.exports = {
-  getById(req,res) {
-    Comment.findById(req.params.comment)
+  getById(req, res) {
+    User.findById(req.params.comment)
       .then(comment => {
         if (!comment) {
           return res.status(403).json({ err: 'No comment found' });
@@ -11,15 +12,22 @@ module.exports = {
       });
   },
   create(req, res) {
+    let { distress, email, text } = req.body;
     if (!req.body.distress) {
-      res.status(403).json({ err: 'Could not create comment, no distress' });      
-    } 
-    Comment.create(req.body)
-      .then(comment => {
-        res.json(comment);
+      res.status(403).json({ err: 'Could not create comment, no distress' });
+    }
+    User.findOne({ email })
+      .then(user => {
+        Comment.create({ user: user._id, text, distress })
+          .then(comment => {
+            res.json(comment);
+          })
+          .catch(() => {
+            res.status(501).json({ err: 'Could not create comment' });
+          });
       })
       .catch(() => {
-        res.status(501).json({ err: 'Could not create comment' });        
+        res.status(501).json({ err: 'Could not create. Wrong user' });
       });
   },
   all(req, res) {
@@ -35,8 +43,8 @@ module.exports = {
       });
   },
   search(req, res) {
-    let comment= {};
-    let { user, text, distress, limit, offset } = req.body; 
+    let comment = {};
+    let { user, text, distress, limit, offset } = req.body;
     comment.user = user;
     comment.text = text;
     comment.distress = distress;
@@ -52,11 +60,12 @@ module.exports = {
   },
   distressComments(req, res) {
     Comment.find({ distress: req.params.distress })
+      .populate('user', 'firstName lastName email')
       .then(comment => {
         res.json(comment);
       })
       .catch(() => {
-        res.status(501).json({ err: 'Could not fetch all comments for this distress' });        
+        res.status(501).json({ err: 'Could not fetch all comments for this distress' });
       });
   },
   commentComments(req, res) {
@@ -65,7 +74,7 @@ module.exports = {
         res.json(comment);
       })
       .catch(() => {
-        res.status(501).json({ err: 'Could not fetch all comments for this comment' });        
+        res.status(501).json({ err: 'Could not fetch all comments for this comment' });
       });
   }
 };
