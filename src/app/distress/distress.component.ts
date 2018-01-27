@@ -26,9 +26,9 @@ export class DistressComponent implements OnInit {
     private userService: UserService,
     private socialAuth: SocialAuthService) { }
 
-  signIn(provider) {
+  signIn(provider?) {
+    console.log("authenticating...")
     this.socialAuth.getUser().subscribe(user => {
-      console.log("authenticating...")
       if (!user) {
         this.socialAuth.signIn(provider).then(user => {
           this.userService.createUser(user).subscribe(dbUser => {
@@ -36,9 +36,10 @@ export class DistressComponent implements OnInit {
             this.isAuth = !!dbUser
           })
         })
-      } else {
+        } else {
         this.userService.getByEmail(user.email).subscribe(user => {
           this.user = user
+          console.log('user!!!!', user)
           this.isAuth = !!user
         })
       }
@@ -75,6 +76,7 @@ export class DistressComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.signIn()
     this.route.data.subscribe((data: { distress: Distress }) => {
       this.distress = data.distress
       console.log(data.distress)
@@ -87,9 +89,6 @@ export class DistressComponent implements OnInit {
       ])
       this.getComments(data.distress._id)
     })
-    this.socialAuth.getUser().subscribe(user => {
-      this.isAuth = !!user
-      this.user = user
-    })
   }
+
 }

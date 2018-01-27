@@ -51,7 +51,7 @@ export class UserService {
   }
 
   getByEmail(email) {
-    this.api.get('/users/email/'+email)
+    return this.api.post('/users/email', {email})
   }
   //THIS RUNS ON LOGIN / SIGNUP. LOGS IN AND AUTHENTICATES USER
   // attemptAuth(url, user) {
