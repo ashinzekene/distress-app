@@ -14,6 +14,18 @@ module.exports = {
         res.status(403).json({ err: 'An error occurred, could not retrieve user' });
       });
   },
+  getByEmail(req, res) {
+    User.findOne({ email: req.body.email }, '-password')
+      .then(user => {
+        if (!user) {
+          return res.status(403).json({ err: 'Could not find any user' });
+        }
+        res.json(user);
+      })
+      .catch(() => {
+        res.status(403).json({ err: 'An error occurred, could not retrieve user' });
+      });
+  },
   getById(req, res) {
     User.findById(req.params.user, '-password')
       .then(user => {

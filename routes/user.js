@@ -6,6 +6,7 @@ const router = express.Router();
 router.get('/', user.all);
 router.get('/me', JWTAuth, extractPayload, user.verifyToken);
 router.post('/login', user.login);
+router.post('/email', user.getByEmail);
 router.post('/social', user.createSocial);
 router.get('/login/google', GoogleAuth.initalize());
 
