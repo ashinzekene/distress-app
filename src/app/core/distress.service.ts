@@ -25,4 +25,12 @@ export class DistressService {
     return this.apiService.post('/distress/search', body)
   }
   
+  comment(body): Observable<Distress[]> {
+    return this.apiService.post('/comments/new', body)
+  }
+  
+  getComments(distressId): Observable<Distress[]> {
+    return this.apiService.get(`/comments/${distressId}/comments`)
+  }
+  
 }
