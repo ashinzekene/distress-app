@@ -27,27 +27,35 @@ module.exports = {
       });
   },
   createSocial(req, res) {
-    let { email } = this.req.body;
+    let { email, provider } = req.body;
+    let user = Object.assign({}, req.body);
+    if (provider == 'FACEBOOK') {
+      user.facebookID = req.body.id;
+    } else {
+      user.googleID = req.body.id;
+    }
+    // console.log('FB ID', user.facebookID);
+    // console.log('User', user);
     User.findOne({ email })
-      .then(user => {
-        if (user) {
-          User.findByIdAndUpdate(user._id, req.body)
+      .then(oldUser => {
+        if (oldUser) {
+          User.findByIdAndUpdate(oldUser._id, user)
             .then(newUser => {
-              user = user.toJSON();
-              delete user.password;
-              user.token = signJWT(user._id, user.email);      
+              newUser = newUser.toJSON();
+              delete newUser.password;
+              newUser.token = signJWT(newUser._id, newUser.email);
               res.json(newUser);
             })
             .catch(err => {
               res.json({ err: 'An error occured. Could not update social a/c' });
             });
         } else {
-          User.create(req.body)
-            .then(user => {
-              user = user.toJSON();
-              delete user.password;
-              user.token = signJWT(user._id, user.email);      
-              res.json(user);
+          User.create(user)
+            .then(newUser => {
+              user = newUser.toJSON();
+              delete newUser.password;
+              newUser.token = signJWT(newUser._id, newUser.email);
+              res.json(newUser);
             })
             .catch(err => {
               res.json({ err: 'An error occured. Could not create social a/c' });
