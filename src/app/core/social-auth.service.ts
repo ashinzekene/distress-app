@@ -6,12 +6,20 @@ import { FacebookLoginProvider, GoogleLoginProvider } from "angular4-social-logi
 export class SocialAuthService {
   constructor(private authService: AuthService) { }
 
-  signInWithGoogle(): void {
-    this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
+  private signInWithGoogle():Promise<any> {
+    return this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
   }
 
-  signInWithFB(): void {
-    this.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
+  private signInWithFB():Promise<any> {
+    return this.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
+  }
+
+  signIn(provider): Promise<any> {
+    if (provider === 'facebook') {
+      return this.signInWithFB()
+    } else {
+      return this.signInWithGoogle()
+    }
   }
 
   signOut(): void {
