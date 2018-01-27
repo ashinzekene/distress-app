@@ -12,27 +12,16 @@ module.exports = {
       });
   },
   create(req, res) {
-    let { distress, email, text } = req.body;
+    let { distress, user, text } = req.body;
     if (!req.body.distress) {
       res.status(403).json({ err: 'Could not create comment, no distress' });
     }
-    User.findOne({ email })
-      .then(user => {
-        if(!user) {
-          res.status(403).json({ err: 'Could not create comment. Wrong user' });
-          return;
-        }
-        Comment.create({ user: user._id, text, distress })
-          .then(comment => {
-            res.json(comment);
-          })
-          .catch(() => {
-            res.status(403).json({ err: 'Could not create comment' });
-          });
+    Comment.create({ user, text, distress })
+      .then(comment => {
+        res.json(comment);
       })
-      .catch(err => {
-        console.log(err);
-        res.status(403).json({ err: 'Could not create. Wrong user' });
+      .catch(() => {
+        res.status(403).json({ err: 'Could not create comment' });
       });
   },
   all(req, res) {

@@ -13,12 +13,12 @@ import { distanceInWordsToNow } from 'date-fns';
 export class DistressComponent implements OnInit {
   public distress: Distress
   public distressComments: any[]
-  public isAuth:boolean = false
-  public user:any
+  public isAuth: boolean = false
+  public user: any
   public textComment: string = ""
 
-  public creatingComment:boolean= false
-  
+  public creatingComment: boolean = false
+
   constructor(
     private route: ActivatedRoute,
     private meta: Meta,
@@ -37,40 +37,41 @@ export class DistressComponent implements OnInit {
           })
         })
       } else {
-       this.user = user
-       this.isAuth = !!user
+        this.userService.getByEmail(user.email).subscribe(user => {
+          this.user = user
+          this.isAuth = !!user
+        })
       }
     })
   }
 
   comment() {
-    if (this.textComment .length < 5) {
+    if (this.textComment.length < 5) {
       return
     }
     this.creatingComment = true
     let comment = {
       distress: this.distress._id,
-      email: this.user.email,
+      user: this.user._id,
       text: this.textComment
     }
     console.log("sending...", comment)
     this.distressService.comment(comment)
-    .subscribe(newComment => {
-      this.creatingComment = false
-      this.getComments(this.distress._id)
-    })
+      .subscribe(newComment => {
+        this.creatingComment = false
+        this.getComments(this.distress._id)
+      })
   }
 
   distanceInWords(date) {
     return distanceInWordsToNow(date)
-  } 
+  }
 
   getComments(id) {
     this.distressService.getComments(id)
-    .subscribe(comments => {
-      console.log('comments ', comments)
-      this.distressComments = comments
-    })
+      .subscribe(comments => {
+        this.distressComments = comments
+      })
   }
 
   ngOnInit() {
@@ -88,7 +89,7 @@ export class DistressComponent implements OnInit {
     })
     this.socialAuth.getUser().subscribe(user => {
       this.isAuth = !!user
-      this.user= user
+      this.user = user
     })
   }
 }
