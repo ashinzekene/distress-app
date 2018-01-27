@@ -6,7 +6,7 @@ const router = express.Router();
 router.get('/', user.all);
 router.get('/me', JWTAuth, extractPayload, user.verifyToken);
 router.post('/login', user.login);
-router.get('/login/fb', FBAuth.initalize());
+router.post('/social', user.createSocial);
 router.get('/login/google', GoogleAuth.initalize());
 
 router.get('/google-oauth-callback', (req, res) => {

@@ -2,7 +2,7 @@ const express = require('express');
 const distress = require('../controllers/distress');
 const multer = require('multer');
 
-const upload = multer({ dest: 'uploads' })
+const upload = multer({ dest: 'uploads' });
 // const images = require('../controllers/image');
 const router = express.Router();
 

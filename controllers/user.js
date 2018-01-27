@@ -26,6 +26,35 @@ module.exports = {
         res.status(403).json({ err: 'An error occurred, could not retrieve user' });
       });
   },
+  createSocial(req, res) {
+    let { email } = this.req.body;
+    User.findOne({ email })
+      .then(user => {
+        if (user) {
+          User.findByIdAndUpdate(user._id, req.body)
+            .then(newUser => {
+              user = user.toJSON();
+              delete user.password;
+              user.token = signJWT(user._id, user.email);      
+              res.json(newUser);
+            })
+            .catch(err => {
+              res.json({ err: 'An error occured. Could not update social a/c' });
+            });
+        } else {
+          User.create(req.body)
+            .then(user => {
+              user = user.toJSON();
+              delete user.password;
+              user.token = signJWT(user._id, user.email);      
+              res.json(user);
+            })
+            .catch(err => {
+              res.json({ err: 'An error occured. Could not create social a/c' });
+            });
+        }
+      });
+  },
   create(req, res) {
     let { username, email, firstname, lastname, bio, password } = req.body;
     let user = new User();
@@ -55,11 +84,11 @@ module.exports = {
     return res.json(req.user);
   },
   login(req, res) {
-    let { username, password, email } = req.body; 
+    let { username, password, email } = req.body;
     User.findOne({ username, password }, '-password')
       .then(user => {
         if (!user) {
-          return res.status(403).json({ result: 'Username or password is not correct' });          
+          return res.status(403).json({ result: 'Username or password is not correct' });
         }
         let userWithToken = Object.assign({}, user.toJSON(), { token: signJWT(user._id, user.username) });
         res.json(userWithToken);

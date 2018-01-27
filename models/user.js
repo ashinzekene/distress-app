@@ -15,11 +15,13 @@ const userSchema = new Schema({
     type: String,
     required: true
   },
-  firstname: String,
-  lastname: String,
+  firstName: String,
+  lastName: String,
   bio: String,
-  avatar: String,
+  provider: String,
+  photoUrl: String,
   ip: String,
+  facebookId: String,
   lastSeen: String,
   following: String
 }, { timestamps: true });
