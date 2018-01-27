@@ -15,9 +15,10 @@ import { GoogleLoginProvider, FacebookLoginProvider } from "angular4-social-logi
 // import { CloudinaryModule, CloudinaryConfiguration, provideCloudinary } from '@cloudinary/angular-5.x';
 // import * as cloudinary from "cloudinary-core";
 
-import { ApiService, JWTService, DistressService, SocialAuthService } from "./core";
+import { ApiService, JWTService, DistressService, SocialAuthService, UserService } from "./core";
 import { DistressResolver } from './distress-resolver.service';
 import { FB_APP_ID, GOOGLE_CLIENT_ID, GOOGLE_MAPS_API_KEY } from "./config";
+import { TopDistressesResolver } from './top-distresses-resolver.service';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -27,7 +28,6 @@ import { DistressComponent } from './distress/distress.component';
 import { DistressListComponent } from './distress-list/distress-list.component';
 import { SearchComponent } from './search/search.component';
 import { NotFoundComponent } from './not-found/not-found.component';
-import { TopDistressesResolver } from './top-distresses-resolver.service';
 
 let config = new AuthServiceConfig([
   {
@@ -73,6 +73,7 @@ export function provideConfig() {
   providers: [
     ApiService,
     JWTService,
+    UserService,
     DistressResolver,
     DistressService,
     SocialAuthService,

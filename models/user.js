@@ -21,7 +21,8 @@ const userSchema = new Schema({
   provider: String,
   photoUrl: String,
   ip: String,
-  facebookId: String,
+  facebookID: String,
+  googleID: String,
   lastSeen: String,
   following: String
 }, { timestamps: true });

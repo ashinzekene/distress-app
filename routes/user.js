@@ -1,6 +1,6 @@
 const express = require('express');
 const user = require('../controllers/user');
-const { extractPayload, JWTAuth, FBAuth, GoogleAuth } = require('../utils/auth')();
+const { extractPayload, JWTAuth, GoogleAuth } = require('../utils/auth')();
 const router = express.Router();
 
 router.get('/', user.all);

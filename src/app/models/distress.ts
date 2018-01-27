@@ -1,4 +1,5 @@
 export class Distress {
+  _id: string;
   title: string;
   description: string;
   author: string;

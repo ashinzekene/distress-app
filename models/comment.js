@@ -11,10 +11,10 @@ const commentSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User'
   }],
-  distress: [{
+  distress: {
     type: Schema.Types.ObjectId,
     ref: 'Distress'
-  }],
+  },
   comments: [{
     type: Schema.Types.ObjectId,
     ref: 'Comment'

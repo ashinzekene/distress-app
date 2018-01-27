@@ -6,25 +6,15 @@ const path = require('path');
 const routes = require('./routes/index');
 mongoose.Promise = require('bluebird');
 const app = express();
-const fileUpload = require('express-fileupload');
 const port = process.env.PORT || 4321;
 const isProduction = process.env.NODE_ENV === 'production';
 
 require('./utils/mongoose');
 require('./utils/auth')(app);
 
-app.use(fileUpload())
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.post('api/upload' ,(req, res) => {
-  console.log(req.file);
-  if (!req.files) {
-    res.json({ res: 'No files uploaded'});
-    return;
-  }
-  res.json({ res: 'Yay!!! Worked'});
-});
 if (!isProduction) {
   process.stdout.write('Not in production');
   app.use((req, res, next) => {

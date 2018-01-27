@@ -39,8 +39,8 @@ function extractPayload(req, res, next) {
   next();
 }
 
-function signJWT(id, username) {
-  return jwt.sign({ id, username }, jwtOptions.secretOrKey);
+function signJWT(id, email) {
+  return jwt.sign({ id, email }, jwtOptions.secretOrKey);
 }
 
 passport.use(new FbStrategy({
