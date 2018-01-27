@@ -17,21 +17,21 @@
     <div class="py-3">
       <div class="pt-4 distress-text">{{ distress.description }}</div>
     </div>
-    <hr class="p-5">
+    <hr class="p-2">
     <div *ngIf="isAuth; else loggedIn" class="row mx-2">
       <textarea name="distress-comment" id="distress-comment" cols="30" [(ngModel)]="textComment" rows="4" class="form-control"></textarea>
-      <div class="btn btn-lg btn-primary my-3" (click)="comment()">Comment on this distress</div>
+      <button class="btn btn-lg btn-primary my-3" [disabled]="creatingComment" (click)="comment()"><i [hidden]="!creatingComment" class="fa fa-spinner fa-fw fa-pulse"></i> Comment on this distress</button>
       <!-- <div class="fb-share-button">
         <a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u&amp;src=sdkpreparse">Share</a>
       </div> -->
     </div>
     <ng-template #loggedIn>
-      <div class="row mx-2">
-        <div class="col-12 d-block">You must be loggd in to comment</div>
+      <div class="row py-3">
+        <div class="col-12 d-block">You must be logged in to comment</div>
         <div class="col-12">
-          <div class="btn btn-danger btn-sm mr-2" (click)="signIn('facebook')">
+          <div class="btn btn-danger btn-sm mr-2" (click)="signIn('google')">
             <i class="fa fa-google"></i> Sign in with Google</div>
-          <div class="btn btn-primary btn-sm mr-2" (click)="signIn('google')">
+          <div class="btn btn-primary btn-sm mr-2" (click)="signIn('facebook')">
             <i class="fa fa-facebook"></i> Sign in with Facebook</div>
         </div>
       </div>

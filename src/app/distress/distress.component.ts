@@ -16,6 +16,8 @@ export class DistressComponent implements OnInit {
   public isAuth:boolean = false
   public user:any
   public textComment: string = ""
+
+  public creatingComment:boolean= false
   
   constructor(
     private route: ActivatedRoute,
@@ -29,8 +31,9 @@ export class DistressComponent implements OnInit {
       console.log("authenticating...")
       if (!user) {
         this.socialAuth.signIn(provider).then(user => {
-          this.userService.createUser(user).subscribe(res => {
-            console.log("logged user", res)
+          this.userService.createUser(user).subscribe(dbUser => {
+            this.user = dbUser
+            this.isAuth = !!dbUser
           })
         })
       } else {
@@ -44,6 +47,7 @@ export class DistressComponent implements OnInit {
     if (this.textComment .length < 5) {
       return
     }
+    this.creatingComment = true
     let comment = {
       distress: this.distress._id,
       email: this.user.email,
@@ -51,14 +55,23 @@ export class DistressComponent implements OnInit {
     }
     console.log("sending...", comment)
     this.distressService.comment(comment)
-      .subscribe(newComment => {
-        console.log("Comment ", newComment)
-      })
+    .subscribe(newComment => {
+      this.creatingComment = false
+      this.getComments(this.distress._id)
+    })
   }
 
   distanceInWords(date) {
     return distanceInWordsToNow(date)
   } 
+
+  getComments(id) {
+    this.distressService.getComments(id)
+    .subscribe(comments => {
+      console.log('comments ', comments)
+      this.distressComments = comments
+    })
+  }
 
   ngOnInit() {
     this.route.data.subscribe((data: { distress: Distress }) => {
@@ -71,11 +84,7 @@ export class DistressComponent implements OnInit {
         { name: 'og:description', content: data.distress.description.substring(0, 51) },
         { name: 'og:keywords', content: data.distress.tags && data.distress.tags.join(",") }
       ])
-      this.distressService.getComments(data.distress._id)
-        .subscribe(comments => {
-          console.log('comments ', comments)
-          this.distressComments = comments
-        })
+      this.getComments(data.distress._id)
     })
     this.socialAuth.getUser().subscribe(user => {
       this.isAuth = !!user
