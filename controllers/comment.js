@@ -18,16 +18,21 @@ module.exports = {
     }
     User.findOne({ email })
       .then(user => {
+        if(!user) {
+          res.status(403).json({ err: 'Could not create comment. Wrong user' });
+          return;
+        }
         Comment.create({ user: user._id, text, distress })
           .then(comment => {
             res.json(comment);
           })
           .catch(() => {
-            res.status(501).json({ err: 'Could not create comment' });
+            res.status(403).json({ err: 'Could not create comment' });
           });
       })
-      .catch(() => {
-        res.status(501).json({ err: 'Could not create. Wrong user' });
+      .catch(err => {
+        console.log(err);
+        res.status(403).json({ err: 'Could not create. Wrong user' });
       });
   },
   all(req, res) {
@@ -39,7 +44,7 @@ module.exports = {
         res.json(comments);
       })
       .catch(() => {
-        res.status(501).json({ err: 'Could not fetch all comments' });
+        res.status(403).json({ err: 'Could not fetch all comments' });
       });
   },
   search(req, res) {
@@ -65,7 +70,7 @@ module.exports = {
         res.json(comment);
       })
       .catch(() => {
-        res.status(501).json({ err: 'Could not fetch all comments for this distress' });
+        res.status(403).json({ err: 'Could not fetch all comments for this distress' });
       });
   },
   commentComments(req, res) {
@@ -74,7 +79,7 @@ module.exports = {
         res.json(comment);
       })
       .catch(() => {
-        res.status(501).json({ err: 'Could not fetch all comments for this comment' });
+        res.status(403).json({ err: 'Could not fetch all comments for this comment' });
       });
   }
 };
