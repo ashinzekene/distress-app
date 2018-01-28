@@ -23,6 +23,10 @@
   <div class="col-md-4 col-lg-4 col-xl-3 visible-md-up">
     <div class="list-group list-group-flush">
       <div class="lead p-3">Filter By Category</div>
+      <div class="list-group-item">
+        <input type="checkbox" name="select-all" id="select-all">
+        <label (click)="selectAll()" for="select-all">Select All</label>
+      </div>
       <div class="list-group-item" *ngFor="let category of categories;let i = index">
         <input type="checkbox" [name]="'category-'+category" [(ngModel)]="selectedCategories[category]" [id]="'category-'+category">
         <i class="fa fa-user"></i>

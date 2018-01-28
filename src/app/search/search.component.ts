@@ -22,16 +22,27 @@ export class SearchComponent implements OnInit {
     ascending: true,
     categories: []
   }
-  public noDistress: boolean= false
-  public searching: boolean= false
-  public hasReturnedResult: boolean= false
+  public noDistress: boolean = false
+  public searching: boolean = false
+  public hasReturnedResult: boolean = false
   public selectedOrder: string = this.orderOptions[0].name
   public selectedCategories = {}
+  public allSelected: boolean = false
   constructor(private distressService: DistressService) { }
 
+  selectAll() {
+    if (this.allSelected) {
+      this.selectedCategories = {}
+    } else {
+      this.categories.forEach(category => {
+        this.selectedCategories[category] = true
+      })
+    }
+    this.allSelected = !this.allSelected
+  }
   search() {
     if (this.params.title.length < 3) {
-      return 
+      return
     }
     this.searching = true
     this.noDistress = false
@@ -44,7 +55,7 @@ export class SearchComponent implements OnInit {
     })
     console.log(params)
   }
-  
+
   changeOrder(x: number) {
     this.selectedOrder = this.orderOptions[x].name
     this.params.orderBy = this.orderOptions[x].value
@@ -53,7 +64,7 @@ export class SearchComponent implements OnInit {
   distanceInWords(date, suffix?: boolean) {
     return distanceInWordsStrict(Date.now(), date, { addSuffix: suffix })
   }
-  
+
   ngOnInit() {
   }
 
