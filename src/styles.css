@@ -1,4 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
+.main-body {
+  min-height: 80vh;
+}
+
 .display-5 {
   font-size: 3.0rem;;
   font-weight: 300;

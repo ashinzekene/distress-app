@@ -1,22 +1,22 @@
 <app-header></app-header>
-<div class="w-100">
-  <div class="display-6 p-4">Get in Contact with Us</div>
+<div class="container p-5 main-body">
+  <div class="display-6 text-center p-4">Get in Contact with Us</div>
   <div class="contact-form">
-    <form action="" #contactForm="ngForm">
+    <form (ngSubmit)="handleSubmit()" action="" #contactForm="ngForm">
       <div class="form-group">
-        <label for="form-name" class="label"></label>
+        <label for="form-name" class="label">Name</label>
         <input type="text" required [(ngModel)]="contact.name" name="name" id="form-name" class="form-control form-conrol-lg">
       </div>
       <div class="form-group">
-        <label for="form-email" class="label"></label>
+        <label for="form-email" class="label">Email Address</label>
         <input type="email" name="email"  required [(ngModel)]="contact.email" id="form-email" class="form-control form-conrol-lg">
       </div>
       <div class="form-group">
-        <label for="form-text" class="label"></label>
-        <textarea cols="6" rows="30" name="text"  required [(ngModel)]="contact.text" id="form-text" class="form-control form-conrol-lg"></textarea>
+        <label for="form-text" class="label">Information</label>
+        <textarea rows="6" name="text"  required [(ngModel)]="contact.text" id="form-text" class="form-control form-conrol-lg"></textarea>
       </div>
-      <div class="form-control">
-        <input type="submit" [disabled]="!contactForm.form.valid" value="Send your message" class="btn btn-primary">
+      <div class="form-group">
+        <input type="submit" [disabled]="!contactForm.form.valid" value="Send your message" class="btn btn-lg btn-primary">
       </div>
     </form>
   </div>
