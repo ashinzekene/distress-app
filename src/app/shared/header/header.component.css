@@ -1,0 +1,12 @@
+.my-button {
+  border: 2px solid rgba(250, 30, 30, 0.9);
+  background-color: transparent;
+  border-radius: 20px;
+  color: white;
+}
+.my-button:hover {
+  border: 2px solid rgba(250, 30, 30, 0.9);
+  background-color: rgba(250, 30, 30, 0.9);
+  border-radius: 20px;
+  color: white;
+}
