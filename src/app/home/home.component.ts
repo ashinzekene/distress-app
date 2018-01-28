@@ -9,6 +9,8 @@ import { DistressService } from '../core';
 })
 export class HomeComponent implements OnInit {
   distresses: Distress[]
+  distressLength: number 
+  commentLength: number 
   constructor(private distressService: DistressService) { }
 
   ngOnInit() {
@@ -20,6 +22,14 @@ export class HomeComponent implements OnInit {
       .subscribe((distresses: Distress[]) => {
         console.log("GOTTEN ", distresses)
         this.distresses = distresses
+      })
+    this.distressService.distressLength()
+      .subscribe(res => {
+        this.distressLength = res.result
+      })
+    this.distressService.commentLength()
+      .subscribe(res => {
+        this.commentLength = res.result
       })
   }
 

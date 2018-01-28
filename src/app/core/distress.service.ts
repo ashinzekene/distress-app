@@ -32,5 +32,13 @@ export class DistressService {
   getComments(distressId): Observable<Distress[]> {
     return this.apiService.get(`/comments/${distressId}/comments`)
   }
+
+  distressLength(): Observable<{result: number}> {
+    return this.apiService.get('/distress/length')
+  }
+  
+  commentLength(): Observable<{result: number}> {
+    return this.apiService.get('/comments/length')
+  }
   
 }

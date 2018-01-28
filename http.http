@@ -1,10 +1,9 @@
-GET http://localhost:4322/api/users
+GET http://localhost:4322/api/distress
 ###
-POST http://distress-app.herokuapp.com/api/comments/new
+POST http://localhost:4322/api/distress/search
 Content-Type: application/json
 
 {
-  "distress": "5a65fd6e729c140014f735b0",
-  "email": "ashinzekene@gmail.com",
-  "text": "I also had the experience"
+  "limit": 2,
+  "orderBy": "title"
 }
