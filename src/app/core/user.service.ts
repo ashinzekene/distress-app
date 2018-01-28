@@ -8,12 +8,13 @@ import { User } from '../models';
 import { JWTService } from './jwt.service';
 import { ApiService } from './api.service';
 import { SocialAuthService } from './social-auth.service';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class UserService {
   public isAuthenticatedSubject = new ReplaySubject<any>(1);
   public isAuthenticated = this.isAuthenticatedSubject.asObservable()
-  private currentUser = {}
+  public currentUser = new BehaviorSubject<Partial<User>>({})
 
   constructor(public api: ApiService, private jwt: JWTService, private socialAuth: SocialAuthService) {
     this.populate()
@@ -22,19 +23,12 @@ export class UserService {
   //THIS RUNS ON START UP TO CHECK IF THE TOKEN ON LOCAL STORAGE IS EXPIRED OR FALSE
   populate() {
     this.socialAuth.getUser()
-      .subscribe(user => {
-        if (user) {
-          this.setAuth(user)
-        } else {
-          this.purgeAuth()
-        }
+      .switchMap(user => this.getByEmail(user && user.email))
+      .subscribe((dbUser: User) => {
+        this.currentUser.next(dbUser)
       })
   }
 
-  // checkAuth(): Observable<any> {
-  //   return this.api.get('/users')
-  // }
-  //THIS STORES TOKEN ON LOCAL STORAGE AND GETS USER DETAILS
   private setAuth(res) {
     this.jwt.setToken(res.token)
     this.isAuthenticatedSubject.next(res)
@@ -51,7 +45,7 @@ export class UserService {
   }
 
   getByEmail(email) {
-    return this.api.post('/users/email', {email})
+    return this.api.post('/users/email', { email })
   }
   //THIS RUNS ON LOGIN / SIGNUP. LOGS IN AND AUTHENTICATES USER
   // attemptAuth(url, user) {

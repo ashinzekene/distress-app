@@ -4,6 +4,7 @@ import { FacebookLoginProvider, GoogleLoginProvider } from "angular4-social-logi
 
 @Injectable()
 export class SocialAuthService {
+  
   constructor(private authService: AuthService) { }
 
   private signInWithGoogle():Promise<any> {
