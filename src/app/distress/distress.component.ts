@@ -29,21 +29,23 @@ export class DistressComponent implements OnInit {
   signIn(provider?) {
     console.log("authenticating...")
     this.socialAuth.getUser().subscribe(user => {
-      if (!user) {
-        this.socialAuth.signIn(provider).then(user => {
-          this.userService.createUser(user).subscribe(dbUser => {
-            console.log("new user", dbUser)
-            this.user = dbUser
-            this.isAuth = !!dbUser
-          })
-        })
-        } else {
-        this.userService.getByEmail(user.email).subscribe(user => {
-          this.user = user
-          console.log('user!!!!', user)
-          this.isAuth = !!user
-        })
-      }
+      console.log(user)
+      this.userService.populate()
+      // if (!user) {
+      //   this.socialAuth.signIn(provider).then(user => {
+      //     // this.userService.createUser(user).subscribe(dbUser => {
+      //     //   console.log("new user", dbUser)
+      //     //   this.user = dbUser
+      //     //   this.isAuth = !!dbUser
+      //     // })
+      //   })
+      //   } else {
+      //   this.userService.getByEmail(user.email).subscribe(user => {
+      //     this.user = user
+      //     console.log('user!!!!', user)
+      //     this.isAuth = !!user
+      //   })
+      // }
     })
   }
 
@@ -61,6 +63,7 @@ export class DistressComponent implements OnInit {
     this.distressService.comment(comment)
       .subscribe(newComment => {
         this.creatingComment = false
+        this.textComment = ""
         this.getComments(this.distress._id)
       })
   }
@@ -87,7 +90,15 @@ export class DistressComponent implements OnInit {
         { name: 'og:description', content: data.distress.description.substring(0, 51) },
         { name: 'og:keywords', content: data.distress.tags && data.distress.tags.join(",") }
       ])
-      this.signIn()
+      this.userService.currentUser
+        .subscribe(user => {
+          if (user) {
+            this.user = user
+            this.isAuth = !!user.email
+          }
+          console.log("User from the new service", user)
+        })
+      // this.signIn()
       this.getComments(data.distress._id)
     })
   }
