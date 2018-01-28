@@ -1,4 +1,5 @@
 const Distress = require('../models/distress');
+const allCategories = require('../utils/constants').categories;
 
 module.exports = {
   getById(req, res) {
@@ -10,7 +11,7 @@ module.exports = {
         res.json(distress);
       })
       .catch(err => {
-        process.stdout.write(err);
+        process.stdout.write(JSON.stringify(err),null, '\t');
         res.status(403).json({ err: 'An error occurred, could not retrieve distress' });
       });
   },
@@ -33,7 +34,7 @@ module.exports = {
         res.json(distress);
       })
       .catch(err => {
-        process.stdout.write(err);
+        process.stdout.write(JSON.stringify(err),null, '\t');
         res.status(403).json({ err: 'An error occurred, could not create distress' });
       });
   },
@@ -44,7 +45,7 @@ module.exports = {
         res.json(distresses);
       })
       .catch(err => {
-        process.stdout.write(err);
+        process.stdout.write(JSON.stringify(err),null, '\t');
         res.status(403).json({ err: 'An error occurred, could not fetch distrsses' });
       });
   },
@@ -69,23 +70,32 @@ module.exports = {
         res.status(403).json({ err: 'An error occurred, could not search distrsses' });
       });
   },
+  /**
+   * @param Req
+   * @param Res
+   * @description filters distresses by req.body
+   */
   search(req, res) {
     let distress= {};
-    let { title, author, location, orderBy, limit, offset } = req.body; 
+    let { title, author, location, orderBy, categories, limit, offset } = req.body; 
     title ? distress.title = RegExp(title, 'i') : null;
     author ? distress.author = author : null;
     location ? distress.location = location : null;
     limit = limit > 20 ? 20 : limit;
     offset = offset ? offset : 0;
+    categories = categories && categories.length ? categories : allCategories.map(cat => cat.toLowerCase());
+    distress = distress ? distress : null;
     Distress.find(distress)
       .limit(limit)
       .skip(offset)
       .sort(orderBy)
+      .where('category')
+      .in(categories)
       .then(distresses => {
         res.json(distresses);
       })
       .catch(err => {
-        process.stdout.write(err);
+        process.stdout.write(JSON.stringify(err),null, '\t');
         res.status(403).json({ err: 'An error occurred, could not search distrsses' });
       });
   },
@@ -95,8 +105,8 @@ module.exports = {
         res.json(distress);
       })
       .catch(err => {
-        process.stdout.write(err);
-        process.stdout.write(err);
+        process.stdout.write(JSON.stringify(err),null, '\t');
+        process.stdout.write(JSON.stringify(err),null, '\t');
         res.status(403).json({err: 'Could not delete Distress' });
       });
   },
@@ -106,7 +116,7 @@ module.exports = {
         res.json(distress);
       })
       .catch(err => {
-        process.stdout.write(err);
+        process.stdout.write(JSON.stringify(err),null, '\t');
         res.status(403).json({ err: 'An error occured while apprroving distress' });
       });
   },
@@ -116,7 +126,7 @@ module.exports = {
         res.json(distress);
       })
       .catch(err => {
-        process.stdout.write(err);
+        process.stdout.write(JSON.stringify(err),null, '\t');
         res.status(403).json({ err: 'An error occured while disproving distress' });
       });
   },
@@ -128,7 +138,7 @@ module.exports = {
         res.json(distresses);
       })
       .catch(err => {
-        process.stdout.write(err);
+        process.stdout.write(JSON.stringify(err),null, '\t');
         res.status(403).json({ err: 'An error occured while fetching distresses for that category' });        
       });
   }

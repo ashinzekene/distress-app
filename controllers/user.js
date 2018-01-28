@@ -93,7 +93,7 @@ module.exports = {
         res.json(user);
       })
       .catch(err => {
-        process.stdout.write(err);
+        process.stdout.write(JSON.stringify(err),null, '\t');
         if (err.code === 11000) {
           return res.status(403).json({ result: 'You already have an account' });
         }
