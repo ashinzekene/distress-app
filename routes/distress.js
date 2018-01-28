@@ -8,6 +8,7 @@ const router = express.Router();
 
 router.get('/', distress.all);
 router.post('/new', distress.create);
+router.get('/length', distress.length);
 router.post('/imgs', upload.any(), function (req, res) {
   // console.log('Files', req.files);
   // console.log('Body', req.body);

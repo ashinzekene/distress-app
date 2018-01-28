@@ -15,6 +15,15 @@ module.exports = {
         res.status(403).json({ err: 'An error occurred, could not retrieve distress' });
       });
   },
+  length(req, res) {
+    Distress.count()
+      .then(len => {
+        res.json({ result: len })
+      })
+      .catch(err => {
+        res.status(403).json({ err: "could not get length of distress"})
+      })
+  },
   create(req, res) {
     let images = [];
     if (req.files) {

@@ -11,6 +11,15 @@ module.exports = {
         res.json(comment);
       });
   },
+  length(req, res) {
+    Comment.count()
+      .then(len => {
+        res.json({ result: len })
+      })
+      .catch(err => {
+        res.status(403).json({ err: "could not get length of distress"})
+      })
+  },
   create(req, res) {
     let { distress, user, text } = req.body;
     if (!req.body.distress) {
