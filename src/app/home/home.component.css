@@ -4,3 +4,6 @@
 .border-right {
   border-right: 1px solid rgb(213, 216, 219)
 }
+.row.blockquote-row:nth-child(odd) {
+  justify-content: flex-end
+}

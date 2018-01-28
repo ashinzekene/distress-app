@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Distress } from '../models/index';
+import { Distress, quotes } from '../models';
 import { DistressService } from '../core';
 
 @Component({
@@ -11,6 +11,7 @@ export class HomeComponent implements OnInit {
   distresses: Distress[]
   distressLength: number 
   commentLength: number 
+  quotes= quotes
   constructor(private distressService: DistressService) { }
 
   ngOnInit() {
