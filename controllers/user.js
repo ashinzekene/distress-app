@@ -66,10 +66,11 @@ module.exports = {
             .then(newUser => {
               user = newUser.toJSON();
               delete newUser.password;
-              newUser.token = signJWT(newUser._id, newUser.email);
+              // newUser.token = signJWT(newUser._id, newUser.email);
               res.json(newUser);
             })
             .catch(err => {
+              process.stdout.write(JSON.stringify(err));
               res.json({ err: 'An error occured. Could not create social a/c' });
             });
         }
