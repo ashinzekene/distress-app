@@ -71,7 +71,7 @@ module.exports = {
             })
             .catch(err => {
               process.stdout.write(JSON.stringify(err));
-              res.json({ err: 'An error occured. Could not create social a/c' });
+              res.json({ err });
             });
         }
       });
