@@ -10,9 +10,9 @@ export const Categories = [
   "Health Care",
   "Immigration",
   "Juduciary",
-  "Others",
   "Pension",
   "Police",
   "Religious",
   "Telecommunication",
+  "Others",
 ] 
