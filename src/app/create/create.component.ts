@@ -4,8 +4,11 @@ import { AgmCoreModule, MapsAPILoader } from '@agm/core';
 import { } from '@types/googlemaps';
 
 import { Categories, Distress } from "../models";
-import { ApiService } from "../core";
+import { ApiService, CloudinaryUploadService } from "../core";
 import { environment } from '../../environments/environment';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/fromPromise';
+import 'rxjs/add/operator/switchMap'
 
 @Component({
   selector: 'app-create',
@@ -30,24 +33,53 @@ export class CreateComponent implements OnInit {
   sample_graphic_invalid = false
   sample_graphic_selected = false
   invalid_sample_graphic_text: string = ''
-  files = []  
+  file: File
+  fileUrl: string = ""
 
 
   constructor(
     private apiService: ApiService,
     private router: Router,
+    private cloudinaryUpload: CloudinaryUploadService,
     private mapsApiLoader: MapsAPILoader,
     private ngZone: NgZone) {
   }
 
   onSubmit() {
     this.showLoading = true
-    let images = this.files.map(img => img.file)
-    let distress = Object.assign({}, this.distress, { tags: this.tags.map(tag => tag.value), images })
+    // upload image to cloudinary
+    if (!this.fileUrl) {
+      this.createDistress()
+    } else {
+      this.cloudinaryUpload.upload(this.file)
+        .then((res:any) => {
+          this.createDistress(JSON.parse(res))
+          console.log("Upload success", res)
+        })
+        .catch(err => {
+          console.log("Upload error", err)
+          this.invalid_sample_graphic_text = "Could not upload image please try another"
+        })
+    }
+  }
+
+  createDistress(res?) {
+    let distress
+    if (res) {
+      console.log("image added", res)
+      distress = Object.assign({}, this.distress, { tags: this.tags.map(tag => tag.value), image: res.secure_url })
+    } else {
+      distress = Object.assign({}, this.distress, { tags: this.tags.map(tag => tag.value) })
+    }
     console.log(distress)
     this.apiService.post('/distress/new', this.distress)
-      .subscribe((distress: Distress) => {
-        console.log(distress)
+      .catch(err => {
+        console.error('An error occured')
+        this.showLoading = false
+        return Observable.create()
+      })
+      .subscribe((distress) => {
+        console.log("Distress", distress)
         this.showLoading = false
         this.router.navigateByUrl('/')
       })
@@ -71,24 +103,16 @@ export class CreateComponent implements OnInit {
     this.sample_graphic_invalid = false
     this.sample_graphic_selected = true
     this.invalid_sample_graphic_text = ""
-    this.insertImage(fileList.item(0))
-  }
-  
-  insertImage(file: File) {
-    // var reader: FileReader = new FileReader()
-    let url = window.URL.createObjectURL(file)
-    this.files.push({ file, url})
-    console.log(this.files)
-    // reader.readAsDataURL(file)
-    // reader.onload = (e: any) => {
-    //   this.previewImage.nativeElement.src = e.target.result
-    // }
+    this.displayImage(fileList.item(0))
   }
 
-  removeImage(i) {
-    this.files = this.files.filter((img, ind) => ind !== i)
+  displayImage(file: File) {
+    let url = window.URL.createObjectURL(file)
+    console.log(url)
+    this.file = file
+    this.fileUrl = url
   }
-  
+
   ngOnInit() {
     this.map = {
       latitude: 6.54837,

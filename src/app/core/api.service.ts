@@ -47,7 +47,7 @@ export class ApiService {
     }
     return this.post(url, formData)
   }
-  postFormData(url: string, data: object): Promise<any> {
+  postFormData(url: string, data: object, absolute=false): Promise<any> {
     var formData: FormData = new FormData()
     for(let x in data) {
       formData.append(x, data[x])
@@ -59,7 +59,11 @@ export class ApiService {
           resolve(xhr.response)
         }
       }
-      xhr.open("POST", this.baseUrl+ url, true)
+      if (absolute) {
+        xhr.open("POST", url, true)
+      } else {
+        xhr.open("POST", this.baseUrl+ url, true)
+      }
       if (this.jwt.getToken()) {
         xhr.setRequestHeader('Authorization', `Bearer ${this.jwt.getToken()}`)
       }

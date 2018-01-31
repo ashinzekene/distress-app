@@ -45,12 +45,11 @@
       <div class="form-group">
         <div class="form-text">1. File must be in PNG, GIF or JPG format</div>
         <div class="form-text">2. Image should not be larger than 2MB</div>
-        <!-- <img #previewImage [hidden]="!sample_graphic_selected" alt="No file selected" width="100%" height="auto" class="border p-3 my-3 rounded"> -->
-        <div *ngFor="let file of files; let i=index">
-          <div class="my-image p-2 border d-inline-block" [ngStyle]="{'background-image': 'url('+ file.url +')'}"></div>
-          <span class="remove-img px-3 py-2" (click)="removeImage(i)"><strong>X</strong></span>
+        <div class="image" *ngIf="fileUrl">
+          <div class="my-image p-2 border d-inline-block" [ngStyle]="{'background-image': 'url('+ fileUrl +')'}"></div>
+          <span class="remove-img px-3 py-2" (click)="removeImage(i)"><strong>&times;</strong></span>
+          <div [hidden]="!sample_graphic_invalid" class="alert alert-danger small my-3">{{ invalid_sample_graphic_text }}</div>
         </div>
-        <div [hidden]="!sample_graphic_invalid" class="alert alert-danger small my-3">{{ invalid_sample_graphic_text }}</div>
       </div>
     </div>
 

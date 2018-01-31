@@ -15,7 +15,7 @@ import { GoogleLoginProvider, FacebookLoginProvider } from "angular4-social-logi
 // import { CloudinaryModule, CloudinaryConfiguration, provideCloudinary } from '@cloudinary/angular-5.x';
 // import * as cloudinary from "cloudinary-core";
 
-import { ApiService, JWTService, DistressService, SocialAuthService, UserService } from "./core";
+import { ApiService, JWTService, DistressService, SocialAuthService, UserService, CloudinaryUploadService } from "./core";
 import { DistressResolver } from './distress-resolver.service';
 import { FB_APP_ID, GOOGLE_CLIENT_ID, GOOGLE_MAPS_API_KEY } from "./config";
 import { TopDistressesResolver } from './top-distresses-resolver.service';
@@ -78,10 +78,11 @@ export function provideConfig() {
     ApiService,
     JWTService,
     UserService,
-    DistressResolver,
     DistressService,
+    DistressResolver,
     SocialAuthService,
     TopDistressesResolver,
+    CloudinaryUploadService,
     {
       provide: AuthServiceConfig,
       useFactory: provideConfig

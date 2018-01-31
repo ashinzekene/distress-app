@@ -18,26 +18,33 @@ module.exports = {
   length(req, res) {
     Distress.count()
       .then(len => {
-        res.json({ result: len })
+        res.json({ result: len });
       })
       .catch(err => {
-        res.status(403).json({ err: "could not get length of distress"})
-      })
+        res.status(403).json({ err: 'could not get length of distress'});
+      });
   },
   create(req, res) {
     let images = [];
     if (req.files) {
       images = req.files.map(img => img.filename);
     }
-    const { title, description, category, tags } = req.body;
+    const { title, description, category, tags, image, location } = req.body;
     let distress= {};  
+    distress.image = image;
+    distress.location = location;
     distress.title = title;
     distress.description = description;
     distress.category = category;
     distress.tags = tags;
     distress.ip = req.ip;
     images.length ? distress.images = images : null;
-    process.stdout.write('\ncreating distress', distress);
+    console.log(`
+    Creating distress
+
+    ${JSON.stringify(distress, null, '\t')}
+
+    `);
     Distress.create(distress)
       .then(distress => {
         res.json(distress);

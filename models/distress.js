@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const distressSchema = new Schema({
   title: String,
   description: String,
-  images: Schema.Types.Array,
+  image: String,
   author: {
     type: Schema.Types.ObjectId,
     ref: 'User',
