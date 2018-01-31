@@ -8,8 +8,8 @@
     <div class="h6">
       <i>Category: </i>{{ distress.category }}
     </div>
-    <div class="h5">
-      <i>Location</i>: {{ distress.location }}
+    <div *ngIf="distress.location" class="h5">
+      <i>Location</i>: {{ distress.location.name }}
     </div>
     <div class="h5">
       <button *ngFor="let tag of distress.tags" type="button" class="btn btn-primary mr-2 px-3 rounded-circle">{{ tag }} </button>

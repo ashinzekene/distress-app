@@ -3,7 +3,20 @@ GET http://localhost:4322/api/distress
 POST http://localhost:4322/api/distress/search
 Content-Type: application/json
 
+
 {
   "limit": 2,
   "orderBy": "title"
+}
+
+###
+POST http://localhost:4322/api/distress/new
+
+{
+  "title": "Embezzelemnt",
+  "description": "This is a description of the stuff sent",
+  "image": "image_url",
+  "category": "police",
+  "location": "Nigeria",
+  "tags": ["raid", "paid"] 
 }

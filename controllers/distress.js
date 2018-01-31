@@ -26,9 +26,7 @@ module.exports = {
   },
   create(req, res) {
     let images = [];
-    if (req.files) {
-      images = req.files.map(img => img.filename);
-    }
+    console.log(req.body);
     const { title, description, category, tags, image, location } = req.body;
     let distress= {};  
     distress.image = image;
@@ -50,6 +48,7 @@ module.exports = {
         res.json(distress);
       })
       .catch(err => {
+        console.log(err);
         process.stdout.write(JSON.stringify(err),null, '\t');
         res.status(403).json({ err: 'An error occurred, could not create distress' });
       });

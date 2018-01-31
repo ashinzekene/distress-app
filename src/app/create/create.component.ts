@@ -65,14 +65,15 @@ export class CreateComponent implements OnInit {
 
   createDistress(res?) {
     let distress
+    let tags = this.tags.map(tag => tag.value)
     if (res) {
       console.log("image added", res)
-      distress = Object.assign({}, this.distress, { tags: this.tags.map(tag => tag.value), image: res.secure_url })
+      distress = Object.assign({}, this.distress, { tags, image: res.secure_url })
     } else {
-      distress = Object.assign({}, this.distress, { tags: this.tags.map(tag => tag.value) })
+      distress = Object.assign({}, this.distress, { tags })
     }
     console.log(distress)
-    this.apiService.post('/distress/new', this.distress)
+    this.apiService.post('/distress/new', distress)
       .catch(err => {
         console.error('An error occured')
         this.showLoading = false
@@ -84,7 +85,6 @@ export class CreateComponent implements OnInit {
         this.router.navigateByUrl('/')
       })
   }
-
 
   uploadFile(e) {
     let fileList: FileList = e.target.files
@@ -108,7 +108,6 @@ export class CreateComponent implements OnInit {
 
   displayImage(file: File) {
     let url = window.URL.createObjectURL(file)
-    console.log(url)
     this.file = file
     this.fileUrl = url
   }
@@ -128,7 +127,6 @@ export class CreateComponent implements OnInit {
       autocomplete.addListener('place_changed', () => {
         this.ngZone.run(() => {
           place = autocomplete.getPlace()
-          console.log("Location is ", place);
           // set result on imput element
           this.location = place.formatted_address
           //verify result
