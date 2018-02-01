@@ -26,7 +26,6 @@ module.exports = {
   },
   create(req, res) {
     let images = [];
-    console.log(req.body);
     const { title, description, category, tags, image, location } = req.body;
     let distress= {};  
     distress.image = image;
@@ -37,12 +36,6 @@ module.exports = {
     distress.tags = tags;
     distress.ip = req.ip;
     images.length ? distress.images = images : null;
-    console.log(`
-    Creating distress
-
-    ${JSON.stringify(distress, null, '\t')}
-
-    `);
     Distress.create(distress)
       .then(distress => {
         res.json(distress);
@@ -102,7 +95,7 @@ module.exports = {
     distress = distress ? distress : null;
     Distress.find(distress)
       .limit(limit)
-      .skip(offset)
+      .skip(offset*limit)
       .sort(orderBy)
       .where('category')
       .in(categories)
