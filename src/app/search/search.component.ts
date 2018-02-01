@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Categories, Distress } from '../models';
+import { Categories, Distress, SearcParams } from '../models';
 import { DistressService } from '../core';
 import { distanceInWordsStrict } from "date-fns";
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-search',
@@ -16,10 +17,9 @@ export class SearchComponent implements OnInit {
     { name: 'Approvals', value: 'approves', ascending: true },
     { name: 'Comments', value: 'comments', ascending: true },
   ]
-  public params = {
+  public params: Partial<SearcParams> = {
     title: '',
     orderBy: '',
-    ascending: true,
     categories: []
   }
   public noDistress: boolean = false
@@ -28,7 +28,7 @@ export class SearchComponent implements OnInit {
   public selectedOrder: string = this.orderOptions[0].name
   public selectedCategories = {}
   public allSelected: boolean = false
-  constructor(private distressService: DistressService) { }
+  constructor(private distressService: DistressService, private route: ActivatedRoute) { }
 
   selectAll() {
     if (this.allSelected) {
@@ -51,9 +51,7 @@ export class SearchComponent implements OnInit {
       this.searching = false
       this.noDistress = !distresses.length
       this.distresses = distresses
-      console.log(`fetched ${distresses}`)
     })
-    console.log(params)
   }
 
   changeOrder(x: number) {
@@ -66,6 +64,16 @@ export class SearchComponent implements OnInit {
   }
 
   ngOnInit() {
+    // runs search on component mount if search params are present on the URL
+    this.route.queryParams.subscribe(params => {
+      if (Object.keys(params).length > 0) {
+        params['limit'] ? this.params.limit = params['limit'] : null
+        params['offset'] ? this.params.offset = params['offset'] : null
+        params['title'] ? this.params.title = params['title'] : null
+        params['orderBy'] ? this.params.orderBy = params['orderBy'] : null
+        this.search()
+      }
+    })
   }
 
 }
