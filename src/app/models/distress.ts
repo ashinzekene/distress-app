@@ -11,5 +11,5 @@ export class Distress {
   comments: string[];
   dispproves: string[];
   witnesses: string[];
-  images: string[];
+  image: string;
 }
