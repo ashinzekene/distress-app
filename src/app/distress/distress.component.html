@@ -5,14 +5,19 @@
     <!-- <div class="lead">
       <p *ngFor="let tag of distress.tags">{{ tag }},</p>
     </div> -->
-    <div class="h6">
-      <i>Category: </i>{{ distress.category }}
+    <div class="h6 pt-2 category">
+      <i class="fa fa-tag"></i> {{ distress.category }}
     </div>
-    <div *ngIf="distress.location" class="h5">
-      <i>Location</i>: {{ distress.location.name }}
+    <div *ngIf="distress.location" class="h5 pt-2 location">
+      <i class="fa fa-map-marker"></i> {{ distress.location.name }}
     </div>
     <div class="h5">
       <button *ngFor="let tag of distress.tags" type="button" class="btn btn-primary mr-2 px-3 rounded-circle">{{ tag }} </button>
+    </div>
+    <div *ngIf="distress.image" class="image">
+      <cl-image [public-id]="distress.image" class="thumbnail inline" angle="20" format="jpg">
+        <cl-transformation height="150" width="400" crop="fill" radius="20"></cl-transformation>
+      </cl-image>
     </div>
     <div class="py-3">
       <div class="pt-4 distress-text">{{ distress.description }}</div>
@@ -20,7 +25,8 @@
     <hr class="p-2">
     <div *ngIf="isAuth; else loggedIn" class="row mx-2">
       <textarea name="distress-comment" id="distress-comment" cols="30" [(ngModel)]="textComment" rows="4" class="form-control"></textarea>
-      <button class="btn btn-lg btn-primary my-3" [disabled]="creatingComment" (click)="comment()"><i [hidden]="!creatingComment" class="fa fa-spinner fa-fw fa-pulse"></i> Comment on this distress</button>
+      <button class="btn btn-lg btn-primary my-3" [disabled]="creatingComment" (click)="comment()">
+        <i [hidden]="!creatingComment" class="fa fa-spinner fa-fw fa-pulse"></i> Comment on this distress</button>
       <!-- <div class="fb-share-button">
         <a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u&amp;src=sdkpreparse">Share</a>
       </div> -->

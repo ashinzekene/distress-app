@@ -12,8 +12,8 @@ import { SocialLoginModule, AuthServiceConfig } from "angular4-social-login";
 import { GoogleLoginProvider, FacebookLoginProvider } from "angular4-social-login";
 
 // import { AuthHttp, AuthConfig } from 'angular2-jwt';
-// import { CloudinaryModule, CloudinaryConfiguration, provideCloudinary } from '@cloudinary/angular-5.x';
-// import * as cloudinary from "cloudinary-core";
+import { CloudinaryModule, CloudinaryConfiguration, provideCloudinary } from '@cloudinary/angular-5.x';
+import * as cloudinary from "cloudinary-core";
 
 import { ApiService, JWTService, DistressService, SocialAuthService, UserService, CloudinaryUploadService } from "./core";
 import { DistressResolver } from './distress-resolver.service';
@@ -65,7 +65,7 @@ export function provideConfig() {
     TagInputModule,
     BrowserAnimationsModule,
     SocialLoginModule,
-    // CloudinaryModule.forRoot(cloudinary, cloudinary_config),
+    CloudinaryModule.forRoot(cloudinary, { cloud_name: "ashinzekene" }),
     AgmCoreModule.forRoot({
       apiKey: GOOGLE_MAPS_API_KEY,
       libraries: ["places"]
