@@ -31,21 +31,6 @@ export class DistressComponent implements OnInit {
     this.socialAuth.getUser().subscribe(user => {
       console.log(user)
       this.userService.populate()
-      // if (!user) {
-      //   this.socialAuth.signIn(provider).then(user => {
-      //     // this.userService.createUser(user).subscribe(dbUser => {
-      //     //   console.log("new user", dbUser)
-      //     //   this.user = dbUser
-      //     //   this.isAuth = !!dbUser
-      //     // })
-      //   })
-      //   } else {
-      //   this.userService.getByEmail(user.email).subscribe(user => {
-      //     this.user = user
-      //     console.log('user!!!!', user)
-      //     this.isAuth = !!user
-      //   })
-      // }
     })
   }
 
@@ -59,7 +44,6 @@ export class DistressComponent implements OnInit {
       user: this.user._id,
       text: this.textComment
     }
-    console.log("sending...", comment)
     this.distressService.comment(comment)
       .subscribe(newComment => {
         this.creatingComment = false
@@ -79,26 +63,41 @@ export class DistressComponent implements OnInit {
       })
   }
 
+  ngOnDestroy() {
+    this.meta.removeTag("property='og:url'");
+    this.meta.removeTag("property='og:type'");
+    this.meta.removeTag("property='og:title'");
+    this.meta.removeTag("property='og:description'");
+    this.meta.removeTag("property='og:keywords'");
+  }
+
   ngOnInit() {
+    // Get distress
     this.route.data.subscribe((data: { distress: Distress }) => {
       this.distress = data.distress
-      console.log(data.distress)
-      this.meta.addTags([
+      // Set meta tags
+      let distress = [
         { name: 'og:url', content: window.location.href },
-        { name: 'og:type', content: "article" },
+        { name: 'og:type', content: 'article' },
         { name: 'og:title', content: data.distress.title },
-        { name: 'og:description', content: data.distress.description.substring(0, 51) },
-        { name: 'og:keywords', content: data.distress.tags && data.distress.tags.join(",") }
-      ])
+        { name: 'og:description', content: data.distress.description.substring(0, 100) }
+      ]
+      if (data.distress.image) {
+        distress.push({ name: 'og:image', content: data.distress.image })
+      }
+      if (data.distress.tags && data.distress.tags.length) {
+        distress.push({ name: 'og:keywords', content: data.distress.tags.join(',') })
+      }
+      this.meta.addTags(distress, true)
+      // Login User
       this.userService.currentUser
         .subscribe(user => {
           if (user) {
             this.user = user
             this.isAuth = !!user.email
           }
-          console.log("User from the new service", user)
         })
-      // this.signIn()
+      // Get distress comments
       this.getComments(data.distress._id)
     })
   }
