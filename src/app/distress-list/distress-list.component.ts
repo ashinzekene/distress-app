@@ -32,7 +32,10 @@ export class DistressListComponent implements OnInit {
     }).concatMap(() => {
       return this.distressService.search(this.searchParams)
     }).subscribe(distresses => {
-      this.distresses = distresses
+      this.distresses = distresses.map(distress => {
+        distress.description.substr(0, 145)
+        return distress
+      })
     })
   }
 

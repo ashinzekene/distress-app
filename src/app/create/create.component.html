@@ -10,7 +10,7 @@
       </div>
       <div class="form-group">
         <label for="distress-tags" class="form-label">Tags</label>
-        <tag-input class="form-control" [(ngModel)]="tags" name="tags" [editable]="true" [maxItems]="5" [ripple]="false" [separatorKeys]="[',',' ']">
+        <tag-input class="form-control" [(ngModel)]="tags" name="tags" [editable]="true" [separatorKeyCodes]="[9]" [maxItems]="5" [ripple]="false" [separatorKeys]="[',',' ']">
         </tag-input>
       </div>
       <div class="form-group">

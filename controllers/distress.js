@@ -89,13 +89,13 @@ module.exports = {
     title ? distress.title = RegExp(title, 'i') : null;
     author ? distress.author = author : null;
     location ? distress.location = location : null;
-    limit = limit > 20 ? 20 : limit;
-    offset = offset ? offset : 0;
+    limit = limit > 20 ? 20 : limit*1;
+    offset = offset ? offset*1 : 0;
     categories = categories && categories.length ? categories : allCategories.map(cat => cat.toLowerCase());
     distress = distress ? distress : null;
     Distress.find(distress)
       .limit(limit)
-      .skip(offset*limit)
+      .skip(offset)
       .sort(orderBy)
       .where('category')
       .in(categories)
