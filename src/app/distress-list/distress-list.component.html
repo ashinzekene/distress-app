@@ -1,4 +1,7 @@
 <app-header></app-header>
+<ul class="pagination justify-content-center pagination-lg">
+  <li *ngFor="let p of pages;let i = index" class="page-item" [class.active]="p == currInd"><a href="javascript:0" (click)="getFor(i+1)" (click)="getFor(i)" class="page-link">{{ i+1 }}</a></li>
+</ul>
 <div class="row m-3">
   <div *ngFor="let distress of distresses" class="col-xs-12 col-md-6 col-xl-4">
     <div class="card m-3">

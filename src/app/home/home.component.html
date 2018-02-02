@@ -33,7 +33,7 @@
     </div>
   </div>
   <div class="container d-flex justify-content-center py-5 m-auto">
-    <button class="btn btn-lg btn-primary">View All Distresses</button>
+    <button [routerLink]="['/top-distresses']" routerLinkActive="router-link-active"  class="btn btn-lg btn-primary">View All Distresses</button>
   </div>
   <div class="container py-5 px-2">
     <div class="blockquote-row row" *ngFor="let quote of quotes;let i = index">
