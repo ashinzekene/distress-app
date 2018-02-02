@@ -18,19 +18,22 @@
         </cl-image>
       </div>
       <ng-template #anyPix>
-        <img class="card-img-top" src="/assets/img.jpg" alt="Card image cap">
+        <img class="card-img-top" src="/assets/corruption1.jpg" alt="Card image cap">
       </ng-template>
       <div class="card-body">
         <h5 class="card-title">{{distress.title }}</h5>
         <p class="card-text">{{ distress.description }}</p>
       </div>
       <div class="card-footer bg-white border-0">
-        <a [routerLink]="['/distress/'+distress._id]" class="btn btn-primary">Read more...</a>
+        <a [routerLink]="['/distress/'+distress._id]" class="btn btn-primary">View distress</a>
       </div>
       <div class="card-footer">
         <small class="text-muted">{{ distress.createdAt | date }}</small>
       </div>
     </div>
+  </div>
+  <div class="container d-flex justify-content-center py-5 m-auto">
+    <button class="btn btn-lg btn-primary">View All Distresses</button>
   </div>
   <div class="container py-5 px-2">
     <div class="blockquote-row row" *ngFor="let quote of quotes;let i = index">
