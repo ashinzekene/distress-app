@@ -23,7 +23,7 @@
       <div class="pt-4 distress-text">{{ distress.description }}</div>
     </div>
     <hr class="p-2">
-    <div *ngIf="isAuth; else loggedIn" class="row mx-2">
+    <div *ngIf="isAuth; else logIn" class="row mx-2">
       <textarea name="distress-comment" id="distress-comment" cols="30" [(ngModel)]="textComment" rows="4" class="form-control"></textarea>
       <button class="btn btn-lg btn-primary my-3" [disabled]="creatingComment" (click)="comment()">
         <i [hidden]="!creatingComment" class="fa fa-spinner fa-fw fa-pulse"></i> Comment on this distress</button>
@@ -31,7 +31,7 @@
         <a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u&amp;src=sdkpreparse">Share</a>
       </div> -->
     </div>
-    <ng-template #loggedIn>
+    <ng-template #logIn>
       <div class="row py-3">
         <div class="col-12 d-block">You must be logged in to comment</div>
         <div class="col-12">

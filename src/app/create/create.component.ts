@@ -4,7 +4,7 @@ import { AgmCoreModule, MapsAPILoader } from '@agm/core';
 import { } from '@types/googlemaps';
 
 import { Categories, Distress } from "../models";
-import { ApiService, CloudinaryUploadService } from "../core";
+import { ApiService, CloudinaryUploadService, SocialAuthService, UserService } from "../core";
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/fromPromise';
@@ -40,6 +40,8 @@ export class CreateComponent implements OnInit {
   constructor(
     private apiService: ApiService,
     private router: Router,
+    private socialAuth: SocialAuthService,
+    private userService: UserService,
     private cloudinaryUpload: CloudinaryUploadService,
     private mapsApiLoader: MapsAPILoader,
     private ngZone: NgZone) {
@@ -111,6 +113,16 @@ export class CreateComponent implements OnInit {
     this.file = file
     this.fileUrl = url
   }
+
+  
+  signIn(provider?) {
+    console.log("authenticating...")
+    this.socialAuth.getUser().subscribe(user => {
+      console.log(user)
+      this.userService.populate()
+    })
+  }
+
 
   ngOnInit() {
     this.map = {

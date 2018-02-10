@@ -15,7 +15,7 @@ export class UserService {
 
   constructor(public api: ApiService, private jwt: JWTService, private socialAuth: SocialAuthService) {}
 
-  //THIS RUNS ON START UP TO CHECK IF THE TOKEN ON LOCAL STORAGE IS EXPIRED OR FALSE
+  // Creates user if not existing
   populate() {
     let createdUser
     this.socialAuth.getUser()
