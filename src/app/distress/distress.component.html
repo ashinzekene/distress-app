@@ -24,6 +24,10 @@
     </div>
     <hr class="p-2">
     <div *ngIf="isAuth; else logIn" class="row mx-2">
+      <div class="row">
+        <div class="col"><i class="fa fa-heart fa-2x">Approve</i></div>
+        <div class="col"><i class="fa fa-heart-o fa-2x">Disprove</i></div>
+      </div>
       <textarea name="distress-comment" id="distress-comment" cols="30" [(ngModel)]="textComment" rows="4" class="form-control"></textarea>
       <button class="btn btn-lg btn-primary my-3" [disabled]="creatingComment" (click)="comment()">
         <i [hidden]="!creatingComment" class="fa fa-spinner fa-fw fa-pulse"></i> Comment on this distress</button>
