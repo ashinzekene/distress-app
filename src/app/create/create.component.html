@@ -1,6 +1,6 @@
 <app-header></app-header>
 <div class="create my-2 mx-3">
-  <div class="display-5 p-5 text-center">Create a Distress</div>
+  <div class="display-5 py-4 px-2 text-center">Create a Distress</div>
 
   <div class="row mx-4 pb-4">
     <ng-template #logIn>
@@ -14,6 +14,21 @@
         </div>
       </div>
     </ng-template>
+    <div class="form-group col-md-8 col-lg-8 col-xl-7 py-3">
+      <div class="form-text">1. File must be in PNG, GIF or JPG format</div>
+      <div class="form-text">2. Image should not be larger than 2MB</div>
+      <div class="image" *ngIf="fileUrl">
+        <div class="my-image p-2 border d-inline-block" [ngStyle]="{'background-image': 'url('+ fileUrl +')'}"></div>
+        <span class="remove-img px-3 py-2" (click)="removeImage(i)">
+          <strong>&times;</strong>
+        </span>
+        <div [hidden]="!sample_graphic_invalid" class="alert alert-danger small my-3">{{ invalid_sample_graphic_text }}</div>
+      </div>
+      <div class="custom-file">
+        <input type="file" (change)="uploadFile($event)" class="custom-file-input" id="customFile">
+        <label class="custom-file-label" for="customFile">Choose file</label>
+      </div>
+    </div>
     <form (ngSubmit)="onSubmit()" #heroForm="ngForm" class="col-md-8 col-lg-8 col-xl-7" action="">
       <div class="form-group">
         <label for="distress-title" class="form-label">Title</label>
@@ -40,30 +55,15 @@
         <textarea required class="form-control" id="distress-description" [(ngModel)]="distress.description" name="description" id=""
           cols="30" rows="10"></textarea>
       </div>
-      <button class="btn btn-primary btn-lg" [disabled]="!heroForm.form.valid || showLoading" type="submit">
+      <button class="btn btn-primary btn-lg my-3" [disabled]="!heroForm.form.valid || showLoading" type="submit">
         <i [hidden]="!showLoading" class="fa fa-spinner fa-spin fa-fw"> </i> Broadcast Distress</button>
     </form>
 
     <div class="col-sm-12 col-md-4 col-lg-4 col-xl-5">
-      <div class="maps hidden-md-down py-3">
+      <div class="maps d-none d-md-block py-3">
         <agm-map [latitude]="map.latitude" [longitude]="map.longitude" [scrollwheel]="false" [zoom]="map.zoomLevel">
           <agm-marker [latitude]="map.latitude" [longitude]="map.longitude"></agm-marker>
         </agm-map>
-      </div>
-      <div class="custom-file">
-        <input type="file" (change)="uploadFile($event)" class="custom-file-input" id="customFile">
-        <label class="custom-file-label" for="customFile">Choose file</label>
-      </div>
-      <div class="form-group">
-        <div class="form-text">1. File must be in PNG, GIF or JPG format</div>
-        <div class="form-text">2. Image should not be larger than 2MB</div>
-        <div class="image" *ngIf="fileUrl">
-          <div class="my-image p-2 border d-inline-block" [ngStyle]="{'background-image': 'url('+ fileUrl +')'}"></div>
-          <span class="remove-img px-3 py-2" (click)="removeImage(i)">
-            <strong>&times;</strong>
-          </span>
-          <div [hidden]="!sample_graphic_invalid" class="alert alert-danger small my-3">{{ invalid_sample_graphic_text }}</div>
-        </div>
       </div>
     </div>
 

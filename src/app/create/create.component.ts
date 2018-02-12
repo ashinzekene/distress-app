@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { AgmCoreModule, MapsAPILoader } from '@agm/core';
 import { } from '@types/googlemaps';
 
-import { Categories, Distress } from "../models";
+import { Categories, Distress, User } from "../models";
 import { ApiService, CloudinaryUploadService, SocialAuthService, UserService } from "../core";
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs/Observable';
@@ -35,6 +35,7 @@ export class CreateComponent implements OnInit {
   invalid_sample_graphic_text: string = ''
   file: File
   fileUrl: string = ""
+  user: any = {}
 
 
   constructor(
@@ -117,10 +118,10 @@ export class CreateComponent implements OnInit {
   
   signIn(provider?) {
     console.log("authenticating...")
-    this.socialAuth.getUser().subscribe(user => {
-      console.log(user)
-      this.userService.populate()
-    })
+    this.userService.logIn()
+      .subscribe(user => {
+        this.user = user
+      })
   }
 
 
