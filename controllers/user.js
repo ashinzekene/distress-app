@@ -38,6 +38,23 @@ module.exports = {
         res.status(403).json({ err: 'An error occurred, could not retrieve user' });
       });
   },
+  socialSignin() {
+    // Creates user if not existing and returns user
+    let { email, firstName, id, lastName, name, photoUrl, provider } = req.body
+    let user = { photoUrl, email, firstName, id, lastName, name }
+    if (provider == 'FACEBOOK') {
+      user.facebookID = req.body.id;
+    } else {
+      user.googleID = req.body.id;
+    }
+    User.findOneAndUpdate({ email }, user, { upsert: true })
+      .then(user => {
+        res.json(user)
+      })
+      .catch(err => {
+        res.json({ err: 'An error occured. Could not update social a/c' });
+      });
+  },
   createSocial(req, res) {
     let { email, provider } = req.body;
     let user = Object.assign({}, req.body);
@@ -94,7 +111,7 @@ module.exports = {
         res.json(user);
       })
       .catch(err => {
-        process.stdout.write(JSON.stringify(err),null, '\t');
+        process.stdout.write(JSON.stringify(err), null, '\t');
         if (err.code === 11000) {
           return res.status(403).json({ result: 'You already have an account' });
         }
