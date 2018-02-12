@@ -4,7 +4,7 @@ import { AgmCoreModule, MapsAPILoader } from '@agm/core';
 import { } from '@types/googlemaps';
 
 import { Categories, Distress, User } from "../models";
-import { ApiService, CloudinaryUploadService, SocialAuthService, UserService } from "../core";
+import { ApiService, CloudinaryUploadService, UserService } from "../core";
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/fromPromise';
@@ -21,6 +21,7 @@ export class CreateComponent implements OnInit {
   public searchElementRef: ElementRef;
 
   distress: Partial<Distress> = {
+    author: "",
     title: "",
     category: "",
     description: "",
@@ -35,13 +36,13 @@ export class CreateComponent implements OnInit {
   invalid_sample_graphic_text: string = ''
   file: File
   fileUrl: string = ""
-  user: any = {}
+  user: User
+  loggedIn: boolean = false
 
 
   constructor(
     private apiService: ApiService,
     private router: Router,
-    private socialAuth: SocialAuthService,
     private userService: UserService,
     private cloudinaryUpload: CloudinaryUploadService,
     private mapsApiLoader: MapsAPILoader,
@@ -55,7 +56,7 @@ export class CreateComponent implements OnInit {
       this.createDistress()
     } else {
       this.cloudinaryUpload.upload(this.file)
-        .then((res:any) => {
+        .then((res: any) => {
           this.createDistress(JSON.parse(res))
           console.log("Upload success", res)
         })
@@ -66,12 +67,22 @@ export class CreateComponent implements OnInit {
     }
   }
 
+  signIn(provider?) {
+    this.userService.logIn()
+      .subscribe(user => {
+        this.user = user
+        this.loggedIn = !!user
+        console.log("SIGNED IN", user)
+        this.distress.author = user && user._id
+      })
+  }
+
   createDistress(res?) {
     let distress
     let tags = this.tags.map(tag => tag.value)
     if (res) {
       console.log("image added", res)
-      distress = Object.assign({}, this.distress, { tags, image: res.secure_url })
+      distress = Object.assign({}, this.distress, { image: res.secure_url, tags })
     } else {
       distress = Object.assign({}, this.distress, { tags })
     }
@@ -114,16 +125,6 @@ export class CreateComponent implements OnInit {
     this.file = file
     this.fileUrl = url
   }
-
-  
-  signIn(provider?) {
-    console.log("authenticating...")
-    this.userService.logIn()
-      .subscribe(user => {
-        this.user = user
-      })
-  }
-
 
   ngOnInit() {
     this.map = {

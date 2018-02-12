@@ -3,9 +3,8 @@
   <div class="display-5 py-4 px-2 text-center">Create a Distress</div>
 
   <div class="row mx-4 pb-4">
-    <ng-template #logIn>
+    <div *ngIf="!loggedIn; else logIn">
       <div class="row py-3">
-        <div class="col-12 d-block">You must be logged in to comment</div>
         <div class="col-12">
           <div class="btn btn-danger btn-sm py-2 mt-2 mr-2" (click)="signIn('google')">
             <i class="fa fa-google"></i> Sign in with Google</div>
@@ -13,7 +12,11 @@
             <i class="fa fa-facebook"></i> Sign in with Facebook</div>
         </div>
       </div>
+    </div>
+    <ng-template #logIn>
+      <p>Posting as {{ user.email }}</p>
     </ng-template>
+
     <div class="form-group col-md-8 col-lg-8 col-xl-7 py-3">
       <div class="form-text">1. File must be in PNG, GIF or JPG format</div>
       <div class="form-text">2. Image should not be larger than 2MB</div>

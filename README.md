@@ -3,13 +3,16 @@
 ## To Do
 [x] Register domains on google and facebook
 
-[] commenting, approving and disapproving distresses
+[ ] commenting, 
+
+[x] approving and disapproving distresses
 
 [x] sorting distresss by location
 
 [x] sorting distresss by date
 
 [x] - sorting distresss by category
+
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.5.
 
