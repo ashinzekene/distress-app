@@ -41,15 +41,14 @@ export class UserService {
     return this.api.post('/users/email', { email })
   }
 
-  logIn() {
+  logIn(): Observable<User> {
     return this.socialAuth.getUser()
-      .map(user => {
-        this.signIn(user)
-        return user
+      .switchMap(user => {
+        return this.signIn(user)
       })
   }
   
-  private signIn(user) {
+  private signIn(user): Observable<User> {
     let newUser = Object.assign({}, user)
     return this.api.post('/users/social', newUser)
       .map(user => {

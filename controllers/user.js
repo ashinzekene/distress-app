@@ -38,7 +38,7 @@ module.exports = {
         res.status(403).json({ err: 'An error occurred, could not retrieve user' });
       });
   },
-  socialSignin() {
+  socialSignin(req, res) {
     // Creates user if not existing and returns user
     let { email, firstName, id, lastName, name, photoUrl, provider } = req.body
     let user = { photoUrl, email, firstName, id, lastName, name }
