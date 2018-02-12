@@ -1,5 +1,5 @@
 <app-header></app-header>
-<ul class="pagination justify-content-center pagination-lg">
+<ul class="pagination justify-content-center pagination-lg my-2">
   <li *ngFor="let p of pages;let i = index" class="page-item" [class.active]="p == currInd"><a href="javascript:0" (click)="getFor(i+1)" (click)="getFor(i)" class="page-link">{{ i+1 }}</a></li>
 </ul>
 <div class="row m-3">
