@@ -28,10 +28,12 @@ export class DistressComponent implements OnInit {
 
   signIn(provider?) {
     console.log("authenticating...")
-    this.socialAuth.getUser().subscribe(user => {
-      console.log(user)
-      this.userService.populate()
-    })
+    this.userService.logIn()
+      .subscribe(user => {
+        console.log("Logged in as", user)
+        this.user = user
+        this.isAuth = !!user
+      })
   }
 
   comment() {
@@ -90,13 +92,7 @@ export class DistressComponent implements OnInit {
       }
       this.meta.addTags(distress, true)
       // Login User
-      this.userService.currentUser
-        .subscribe(user => {
-          if (user) {
-            this.user = user
-            this.isAuth = !!user.email
-          }
-        })
+      this.signIn()
       // Get distress comments
       this.getComments(data.distress._id)
     })

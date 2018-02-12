@@ -16,21 +16,21 @@ export class UserService {
   constructor(public api: ApiService, private jwt: JWTService, private socialAuth: SocialAuthService) {}
 
   // Creates user if not existing
-  populate() {
-    let createdUser
-    this.socialAuth.getUser()
-      .switchMap(user => {
-        if (!user || !user.email) {
-          throw new Error("chaiii")
-        }
-        createdUser = user
-        return this.getByEmail(user && user.email)
-      })
-      .catch(err => this.createUser(createdUser))
-      .subscribe((dbUser: User) => {
-        this.currentUser.next(dbUser)
-      })
-  }
+  // populate() {
+  //   let createdUser
+  //   this.socialAuth.getUser()
+  //     .switchMap(user => {
+  //       if (!user || !user.email) {
+  //         throw new Error("chaiii")
+  //       }
+  //       createdUser = user
+  //       return this.getByEmail(user && user.email)
+  //     })
+  //     .catch(err => this.createUser(createdUser))
+  //     .subscribe((dbUser: User) => {
+  //       this.currentUser.next(dbUser)
+  //     })
+  // }
 
   
   get user() {
@@ -41,7 +41,15 @@ export class UserService {
     return this.api.post('/users/email', { email })
   }
 
-  createUser(user) {
+  logIn() {
+    return this.socialAuth.getUser()
+      .map(user => {
+        this.signIn(user)
+        return user
+      })
+  }
+  
+  private signIn(user) {
     let newUser = Object.assign({}, user)
     return this.api.post('/users/social', newUser)
       .map(user => {

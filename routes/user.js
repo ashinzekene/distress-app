@@ -7,7 +7,7 @@ router.get('/', user.all);
 router.get('/me', JWTAuth, extractPayload, user.verifyToken);
 router.post('/login', user.login);
 router.post('/email', user.getByEmail);
-router.post('/social', user.createSocial);
+router.post('/social', user.socialSignin);
 router.get('/login/google', GoogleAuth.initalize());
 
 router.get('/google-oauth-callback', (req, res) => {
