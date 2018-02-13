@@ -92,11 +92,18 @@ module.exports = {
     let distress= {};
     let { title, author, location, orderBy, categories, limit, offset, asc } = req.body; 
     title ? distress.title = RegExp(title, 'i') : null;
+    orderBy = orderBy || "createdAt"
     author ? distress.author = author : null;
     location ? distress.location = location : null;
-    limit = limit >50 ? 20 : limit*1;
+    limit = limit > 50 ? 20 : limit*1;
     offset = offset ? offset*1 : 0;
-    categories = categories && categories.length ? categories : allCategories.map(cat => cat.toLowerCase());
+    // Change categries to lowercase
+    _allCategories = allCategories.map(cat => cat.toLowerCase())
+    if (categories && categories.length) {
+      _categories = categories.map(cat => cat.toLowerCase())
+    } else {
+      _categories = _allCategories;
+    }
     distress = distress ? distress : null;
     asc = asc*1
     console.log("ASC ",asc)
@@ -105,9 +112,9 @@ module.exports = {
       .skip(offset)
       .sort({ orderBy: asc })
       .where('category')
-      .in(categories)
+      // .in(_allCategories)
       .then(distresses => {
-        res.json(distresses.length);
+        res.json(distresses);
       })
       .catch(err => {
         process.stdout.write(JSON.stringify(err),null, '\t');

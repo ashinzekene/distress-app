@@ -7,6 +7,7 @@ const upload = multer({ dest: 'uploads' });
 const router = express.Router();
 
 router.get('/', distress.all);
+router.get('/all', distress._all);
 router.post('/new', distress.create);
 router.get('/length', distress.length);
 router.post('/imgs', upload.any(), function (req, res) {
