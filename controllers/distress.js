@@ -26,8 +26,9 @@ module.exports = {
   },
   create(req, res) {
     let images = [];
-    const { title, description, category, tags, image, location } = req.body;
+    const { author, title, description, category, tags, image, location } = req.body;
     let distress= {};  
+    distress.author = author;
     distress.image = image;
     distress.location = location;
     distress.title = title;
@@ -57,6 +58,10 @@ module.exports = {
         res.status(403).json({ err: 'An error occurred, could not fetch distrsses' });
       });
   },
+  _all(req, res) {
+    Distress.find()
+      .then(distresses => res.json(distresses))
+  },
   searchQuery(req, res) {
     let distress= {};
     let { title, author, location, category, limit, offset, sort } = req.query; 
@@ -85,22 +90,24 @@ module.exports = {
    */
   search(req, res) {
     let distress= {};
-    let { title, author, location, orderBy, categories, limit, offset } = req.body; 
+    let { title, author, location, orderBy, categories, limit, offset, asc } = req.body; 
     title ? distress.title = RegExp(title, 'i') : null;
     author ? distress.author = author : null;
     location ? distress.location = location : null;
-    limit = limit > 20 ? 20 : limit*1;
+    limit = limit >50 ? 20 : limit*1;
     offset = offset ? offset*1 : 0;
     categories = categories && categories.length ? categories : allCategories.map(cat => cat.toLowerCase());
     distress = distress ? distress : null;
+    asc = asc*1
+    console.log("ASC ",asc)
     Distress.find(distress)
       .limit(limit)
       .skip(offset)
-      .sort(orderBy)
+      .sort({ orderBy: asc })
       .where('category')
       .in(categories)
       .then(distresses => {
-        res.json(distresses);
+        res.json(distresses.length);
       })
       .catch(err => {
         process.stdout.write(JSON.stringify(err),null, '\t');
