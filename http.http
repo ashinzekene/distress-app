@@ -1,19 +1,24 @@
-GET http://localhost:4322/api/distress
+GET http://localhost:4321/api/distress/all
 ###
-POST http://localhost:4322/api/distress/search
+POST http://localhost:4321/api/distress/search
 Content-Type: application/json
 
-
 {
-  "orderBy": "createdAt"
+  "limit": 40,
+  "title": "snake",
+  "asc": 1
 }
 
 ###
-POST http://localhost:4322/api/distress/new
+GET http://localhost:4321/api/users
+
+###
+POST http://localhost:4321/api/distress/new
 
 {
-  "title": "Embezzelemnt",
-  "description": "This is a description of the stuff sent",
+  "author": "5a4fceeea9b75c111c7d95c2",
+  "title": "Newest Latest",
+  "description": "This is new one just done now",
   "image": "image_url",
   "category": "police",
   "location": "Nigeria",

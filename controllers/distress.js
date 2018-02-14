@@ -28,8 +28,8 @@ module.exports = {
     let images = [];
     const { author, title, description, category, tags, image, location } = req.body;
     let distress= {};  
-    distress.author = author;
-    distress.image = image;
+    author ? distress.author = author: null;
+    image? distress.image = image: null;
     distress.location = location;
     distress.title = title;
     distress.description = description;
@@ -105,13 +105,13 @@ module.exports = {
       _categories = _allCategories;
     }
     distress = distress ? distress : null;
-    asc = asc*1
+    asc = asc ? 1 : -1
     console.log("ASC ",asc)
     Distress.find(distress)
       .limit(limit)
       .skip(offset)
-      .sort({ orderBy: asc })
-      .where('category')
+      .sort({orderBy: asc})
+      // .where('category')
       // .in(_allCategories)
       .then(distresses => {
         res.json(distresses);
