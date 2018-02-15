@@ -39,7 +39,7 @@ export class DistressListComponent implements OnInit {
     this.distressService.search(this.searchParams)
       .subscribe(distresses => {
         this.distresses = distresses.map(distress => {
-          distress.description.substr(0, 145)
+          distress.description && distress.description.substr(0, 145)
           return distress
         })
       })
@@ -61,7 +61,7 @@ export class DistressListComponent implements OnInit {
       return this.distressService.search(this.searchParams)
     }).subscribe(distresses => {
       this.distresses = distresses.map(distress => {
-        distress.description.substr(0, 145)
+        distress.description && distress.description.substr(0, 145)
         return distress
       })
     })

@@ -36,3 +36,7 @@
   line-height: 1.58;
   letter-spacing: -.003em;
 }
+
+.card-footer {
+  background: rgb(230, 240, 240)
+}
