@@ -4,7 +4,9 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
+    "serve": "ng serve",
     "start": "node server.js",
+    "server": "nodemon",
     "heroku-postbuild": "ng build --prod --aot",
     "build": "ng build --prod",
     "test": "ng test",
