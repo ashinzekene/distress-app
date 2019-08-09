@@ -33,7 +33,7 @@
     "angular2-jwt": "^0.2.3",
     "angular4-social-login": "^1.1.1",
     "bcrypt-nodejs": "0.0.3",
-    "bluebird": "^3.5.1",
+    "bluebird": "^3.5.5",
     "body-parser": "^1.18.2",
     "bootstrap-social": "^5.1.1",
     "cloudinary": "^1.9.1",
